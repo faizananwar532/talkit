@@ -1,5 +1,5 @@
 const redis = require('redis');
-const client = redis.createClient(6379, 'redischatapp');
+const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_SERVER);
 
 const createNotification = async () => {
 
