@@ -18,16 +18,16 @@ do
   fi
 
   # Read value of current variable if exists as Environment variable
-  value=$(printf '%s\n' "${!varname}")
+  value=$(printf '%s\n'	"${!varname}")
   # Otherwise use value from .env file
   [[ -z $value ]] && value=${varvalue}
 
   # Append configuration property to JS file
-  echo "  $varname: \"$value\"," >> ./env-config.js
+  echo " $varname: \"$value\"," >> ./env-config.js
 done < .runtime_env
 
 echo "}" >> ./env-config.js
 
-cp env-config.js public/env-config.js
+cp env-config.js public/
 
 cat env-config.js
