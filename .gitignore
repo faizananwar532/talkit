@@ -16,3 +16,6 @@ yarn.lock
 *.rdb
 talkit-prod-25b0dcb1dae7.json
 **.drone.yml
+pgdata
+redisdata
+.eslintcache

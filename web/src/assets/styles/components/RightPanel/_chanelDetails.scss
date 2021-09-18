@@ -1,0 +1,41 @@
+.channel-details-container {
+	width: 100%;
+	height: calc(100% - 198px);
+	background-color: $grey1;
+	border-radius: 25px 25px 0px 0px;
+	padding: 40px;
+	display: flex;
+
+	.channel-details {
+		display: flex;
+
+		.channel-icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 10px;
+			width: 75px;
+			height: 75px;
+			background: #48bfe3;
+			border-radius: 66px;
+
+			span {
+				@extend .headline4;
+				color: $grey0 !important;
+			}
+		}
+		.channel-name {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 15px 20px;
+			span {
+				@extend .headline6;
+			}
+			.span2 {
+				@extend .subtitle1;
+				color: $grey5;
+			}
+		}
+	}
+}

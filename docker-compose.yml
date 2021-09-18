@@ -43,27 +43,34 @@ services:
   #   environment:
   #     REACT_APP_GW_URL: http://localhost:3000
 
-  # auth:
-  #   build: ./backend/auth
-  #   command: sh ./docker-entrypoint.sh
-  #   restart: always
-  #   ports: 
-  #   - 4000:4000
-  #   depends_on: 
-  #   - db
-  #   environment: 
-  #     POSTGRES_USERNAME: $DB_USERNAME
-  #     POSTGRES_PASSWORD: $DB_PASSWORD
-  #     POSTGRES_HOST: $DB_HOST
-  #     POSTGRES_DATABASE: $AUTH_DB
+  auth:
+    build: ./backend/auth
+    container_name: auth
+    command: sh ./docker-entrypoint.sh
+    restart: always
+    ports: 
+    - 4000:4000
+    depends_on: 
+    - db
+    - redis
+    environment: 
+      PORT: 4000
+      POSTGRES_USERNAME: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_HOST: $DB_HOST
+      POSTGRES_DATABASE: $AUTH_DB
+      USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
+      ACCESS_TOKEN_SECRET_KEY: $ACCESS_TOKEN_SECRET_KEY
+      REFRESH_TOKEN_SECRET_KEY: $REFRESH_TOKEN_SECRET_KEY
+      USER_ACTIVATION_TOKEN_SECRET_KEY: $USER_ACTIVATION_TOKEN_SECRET_KEY
 
   redis:
     container_name: redischatapp
     image: "redislabs/redismod"
     ports:
-      - 6379:6379
+      - $REDIS_PORT:$REDIS_PORT
     volumes:
-      - ./redisdata:/data
+      - ./backend/redisdata:/data
     entrypoint:
       redis-server
         --loadmodule /usr/lib/redis/modules/redisearch.so
@@ -72,6 +79,48 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+
+  # notification:
+  #   build: ./backend/notification
+  #   container_name: notification
+  #   command: sh ./docker-entrypoint.sh
+  #   restart: always
+  #   ports: 
+  #   - 5000:5000
+  #   depends_on: 
+  #   - db
+  #   - redis
+  #   environment: 
+  #     PORT: 5000
+  #     USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
+
+  chat:
+    build: backend/chat/
+    container_name: chat
+    ports:
+      - $CHAT_PORT:$CHAT_PORT
+    command: sh ./docker-entrypoint.sh
+    restart: always
+    environment:
+      CHAT_PORT: $CHAT_PORT
+      REDIS_PORT: $REDIS_PORT
+      AUTH_PORT: 4000
+
+  notification:
+    build: ./backend/notification
+    container_name: notification
+    command: sh ./docker-entrypoint.sh
+    restart: always
+    ports: 
+    - 5000:5000
+    depends_on: 
+    - db
+    - redis
+    environment: 
+      PORT: 5000
+      USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
+      MAILGUN_API_KEY: $MAILGUN_API_KEY
+      MAILGUN_DOMAIN_NAME: $MAILGUN_DOMAIN_NAME
 
   # redis:
   #   container_name: redis

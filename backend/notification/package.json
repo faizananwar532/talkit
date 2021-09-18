@@ -1,0 +1,35 @@
+{
+	"name": "notification",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"start": "node app.js",
+		"migrate": "knex --knexfile=./database/knexfile.js migrate:latest",
+		"lint": "eslint '**/*.js'"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^0.21.4",
+		"express": "^4.17.1",
+		"knex": "^0.95.6",
+		"mailgun-js": "^0.22.0",
+		"node-fetch": "^2.6.1",
+		"nodemailer": "^6.6.3",
+		"objection": "^2.2.15",
+		"pg": "^8.6.0",
+		"redis": "^3.1.2"
+	},
+	"devDependencies": {
+		"eslint": "^7.18.0",
+		"husky": "^4.3.8",
+		"jest": "^26.6.3"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn lint",
+			"pre-push": "yarn lint"
+		}
+	}
+}
