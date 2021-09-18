@@ -1,36 +1,21 @@
 import React from "react";
 import { ReactComponent as UsersIcon } from "../../assets/icons/basic/users.svg";
+import ImageIcon from "../common/ImageIcon";
 
 export default function ChannelMembers() {
 
 
 	const members = ["zain", "zain", "zain", "zain", "zain", "zain"];
-	const membersProfileIcon = (image, index) => {
-		return (
-			<div className="profile-icon" style={{ marginLeft: `${index !== 0 ? "-10px" : "0px"}` }}>
-				{
-					image
-						?
-						<img src={image} />
-						:
-						<span>MZ</span>
-				}
-			</div>
-		);
-	};
+
 	return (
 		<div className="channel-members-details-container">
-			<span> Channel Members </span>
+			<span className="room-heading"> Channel Members </span>
 			<div className="channel-members-icons-container">
 				<div className="channel-members-icons">
 					{
 						members.map((member, index) => {
 							return (
-								<>
-									{
-										membersProfileIcon(null, index)
-									}
-								</>
+								<ImageIcon type="sm" key={index} image={null} style={{ marginLeft: `${index !== 0 ? "-10px" : "0px"}` }} />
 							);
 						})
 					}

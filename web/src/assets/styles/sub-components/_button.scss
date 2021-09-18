@@ -3,29 +3,34 @@
 
 .button-primary {
 	background-color: $primaryColor;
-	padding: 10px 30px;
-	text-align: center;
-	cursor: pointer;
-	display: inline-block;
-	border: none;
-	border-radius: 10px;
-	font-family: Poppins;
+	padding         : 10px 30px;
+	text-align      : center;
+	cursor          : pointer;
+	display         : inline-block;
+	border          : none;
+	border-radius   : 10px;
+	font-family     : Poppins;
+
+	&:focus {
+		outline: none;
+	}
 }
 
 .button-secondary {
 	background-color: $grey0;
-	padding: 10px 30px;
-	cursor: pointer;
-	border: 1px solid $grey6;
-	border-radius: 50px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	padding         : 10px 30px;
+	cursor          : pointer;
+	border          : 1px solid $grey6;
+	border-radius   : 50px;
+	display         : flex;
+	justify-content : space-between;
+	align-items     : center;
 
 	img {
-		width: 40px;
+		width : 40px;
 		height: 40px;
 	}
+
 	.button-text {
 		span {
 			@extend .headline1;

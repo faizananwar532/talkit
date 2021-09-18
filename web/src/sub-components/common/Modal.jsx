@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactComponent as Cross } from "../../assets/icons/basic/close.svg";
-import Button from "../../subComponents/Button";
+import Button from "../Button";
 
 
 /**
@@ -20,13 +20,18 @@ export default function Modal(props) {
 
 			<div className={`custom-modal  ${props.className}`} style={{ height: `${props.height}`, width: `${props.width}`, ...props.style }}>
 				<div className="header">
-					<span>{props.title || "Title"}</span>
+
+					<span>{props.title}</span>
 					<Cross className="pointer" onClick={props.onClose} />
 				</div>
 				{props.children}
-				<div className="modal-btn-container">
-					<Button primary label={props.confirmBtnTitle} style={{ color: "white" }} />
-				</div>
+				{
+					props.confirmBtnTitle &&
+					<div className="modal-btn-container">
+						<Button primary label={props.confirmBtnTitle} style={{ color: "white" }} onClick={props.onConfirm} />
+					</div>
+				}
+
 			</div>
 
 
