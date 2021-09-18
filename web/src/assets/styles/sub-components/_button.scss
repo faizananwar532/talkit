@@ -3,29 +3,34 @@
 
 .button-primary {
 	background-color: $primaryColor;
-	padding: 10px 30px;
-	text-align: center;
-	cursor: pointer;
-	display: inline-block;
-	border: none;
-	border-radius: 10px;
-	font-family: Poppins;
+	padding         : 10px 30px;
+	text-align      : center;
+	cursor          : pointer;
+	display         : inline-block;
+	border          : none;
+	border-radius   : 10px;
+	font-family     : Poppins;
+}
+
+.button-primary:disabled {
+	background-color: $primaryLight;
 }
 
 .button-secondary {
 	background-color: $grey0;
-	padding: 10px 30px;
-	cursor: pointer;
-	border: 1px solid $grey6;
-	border-radius: 50px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	padding         : 10px 30px;
+	cursor          : pointer;
+	border          : 1px solid $grey6;
+	border-radius   : 50px;
+	display         : flex;
+	justify-content : space-between;
+	align-items     : center;
 
 	img {
-		width: 40px;
+		width : 40px;
 		height: 40px;
 	}
+
 	.button-text {
 		span {
 			@extend .headline1;
@@ -34,14 +39,28 @@
 	}
 }
 
-.processing::after {
-	
-	content: '';
-	display: block;
-	height: 20px;
-	width: 20px;
-	border: 2px solid #D92B21;
-	border-top: 2px solid transparent;
+.processing {
+
+	display      : block;
+	height       : 15px;
+	width        : 15px;
+	float        : left;
+	margin-top   : 5px;
+	border       : 2px solid #FFFFFF;
+	border-top   : 2px solid transparent;
 	border-radius: 100%;
+	animation    : loader 0.5s linear 0s infinite;
+
+}
+
+@keyframes loader {
+
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
 
 }
