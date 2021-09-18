@@ -36,7 +36,6 @@ steps:
     - echo $DRONE_SA | base64 -d > gcp-key.json
     - gcloud auth activate-service-account --key-file gcp-key.json
     - gcloud config set core/project talkit-main
-    - sh web/mountFiles.sh
     - cd web
     - gcloud builds submit --config=cloudbuild.yaml --substitutions=_COMMIT_SHA=${DRONE_COMMIT:0:7}
 
