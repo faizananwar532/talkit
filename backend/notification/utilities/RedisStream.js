@@ -1,9 +1,9 @@
 const redis = require('redis');
 const { sendMail } = require('../controllers/MailController');
 
-const pubcli = redis.createClient(6379, 'redischatapp');
+const pubcli = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_SERVER);
 
-const subcli = redis.createClient(6379, 'redischatapp');
+const subcli = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_SERVER);
 
 exports.initChannelsSubscription = (channels) => {
 	subcli.on('subscribe', function (channel, count) {
