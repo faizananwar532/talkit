@@ -1,6 +1,6 @@
 const express = require('express');
 const KeyMaster = require('./utilities/KeyMaster');
-const { sendResponse } = require('./utilities/Middleware');
+const { sendResponse, crossOriginResource } = require('./utilities/Middleware');
 const databaseConfig = require('./database/DatabaseConfig');
 const authRoutes = require('./routes/AuthRoutes');
 const inviteRoutes = require('./routes/InviteRoutes');
@@ -12,6 +12,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(crossOriginResource);
 
 databaseConfig.initializeDB();
 
