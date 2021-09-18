@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../../subComponents/Button";
-import Input from "../../subComponents/Input";
+import Button from "../../sub-components/Button";
+import Input from "../../sub-components/Input";
 export default function SignUp(){
 	return(
 		<div className="signup-container">
