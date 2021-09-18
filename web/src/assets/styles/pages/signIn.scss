@@ -1,4 +1,12 @@
-.sign-in {
-	width: 100vw;
-	height: 100vh;
+@import "../style-assets/colors";
+
+.signin-container {
+	width: 25%;
+	height: auto;
+	min-height: 350px;
+	padding: 20px 30px;
+	border-radius: 12px;
+	background-color: $primaryLight;
+	display: flex;
+	flex-direction: column;
 }
