@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { isEmailValid, isPasswordValid } from "../../../../backend/auth/utilities/Utility";
+import { isEmailValid, isPasswordValid } from "./../../utils/Utilites";
 import Button from "../../sub-components/Button";
 import Input from "../../sub-components/Input";
 import {authBaseUrl} from "./../../utils/BaseURL";
@@ -25,8 +25,6 @@ export default function SignUp(){
 	};
 
 	const validateForm = () => {
-
-		console.log(user);
 
 		if (!user.first_name) {
 			return { isValid: false, message: "First Name is required" };
