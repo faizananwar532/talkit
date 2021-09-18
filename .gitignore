@@ -1,1 +1,16 @@
 *.yaml
+**infra
+.helmignore
+*.lock
+*.tgz
+*.tf
+.helmignore
+Chart.lock
+*.tgz
+letsencrypt_prod.yaml
+letsencrypt_staging.yaml
+secret.tfvars
+node_modules
+yarn.lock
+*.aof
+*.rdb
