@@ -11,51 +11,51 @@ services:
   #   environment:
   #     - AMBASSADOR_NO_KUBEWATCH=no_kubewatch
 
-  db:
-    image: postgres
-    container_name: postgresdb
-    restart: always
-    ports: 
-    - $POSTGRES_PORT:$POSTGRES_PORT
-    environment:
-      POSTGRES_PASSWORD: $DB_PASSWORD
-      POSTGRES_USER: $DB_USERNAME
-      POSTGRES_DB: $AUTH_DB
-    volumes: 
-    - ./backend/pgdata:/var/lib/postgresql/data
+  # db:
+  #   image: postgres
+  #   container_name: postgresdb
+  #   restart: always
+  #   ports: 
+  #   - $POSTGRES_PORT:$POSTGRES_PORT
+  #   environment:
+  #     POSTGRES_PASSWORD: $DB_PASSWORD
+  #     POSTGRES_USER: $DB_USERNAME
+  #     POSTGRES_DB: $AUTH_DB
+  #   volumes: 
+  #   - ./backend/pgdata:/var/lib/postgresql/data
 
-  #database management tool 
-  adminer:
-    image: adminer
-    container_name: adminer
-    restart: always
-    ports:
-      - $MACHINE_ADMINER_PORT:$ADMINER_PORT
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres
+  # #database management tool 
+  # adminer:
+  #   image: adminer
+  #   container_name: adminer
+  #   restart: always
+  #   ports:
+  #     - $MACHINE_ADMINER_PORT:$ADMINER_PORT
+  #   environment:
+  #     ADMINER_DEFAULT_SERVER: postgres
 
-  #frontend app
-  web:
-    build: web/
-    restart: always
-    ports:
-      - "80:80"
-    environment:
-      REACT_APP_GW_URL: http://localhost:3000
+  # #frontend app
+  # web:
+  #   build: web/
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #   environment:
+  #     REACT_APP_GW_URL: http://localhost:3000
 
-  auth:
-    build: ./backend/auth
-    command: sh ./docker-entrypoint.sh
-    restart: always
-    ports: 
-    - 4000:4000
-    depends_on: 
-    - db
-    environment: 
-      POSTGRES_USERNAME: $DB_USERNAME
-      POSTGRES_PASSWORD: $DB_PASSWORD
-      POSTGRES_HOST: $DB_HOST
-      POSTGRES_DATABASE: $AUTH_DB
+  # auth:
+  #   build: ./backend/auth
+  #   command: sh ./docker-entrypoint.sh
+  #   restart: always
+  #   ports: 
+  #   - 4000:4000
+  #   depends_on: 
+  #   - db
+  #   environment: 
+  #     POSTGRES_USERNAME: $DB_USERNAME
+  #     POSTGRES_PASSWORD: $DB_PASSWORD
+  #     POSTGRES_HOST: $DB_HOST
+  #     POSTGRES_DATABASE: $AUTH_DB
 
   redis:
     container_name: redischatapp
