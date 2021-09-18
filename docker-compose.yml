@@ -35,13 +35,13 @@ services:
       ADMINER_DEFAULT_SERVER: postgres
 
   #frontend app
-  web:
-    build: web/
-    restart: always
-    ports:
-      - "80:80"
-    environment:
-      REACT_APP_GW_URL: http://localhost:3000
+  # web:
+  #   build: web/
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #   environment:
+  #     REACT_APP_GW_URL: http://localhost:3000
 
   auth:
     build: ./backend/auth
@@ -56,19 +56,21 @@ services:
       POSTGRES_PASSWORD: $DB_PASSWORD
       POSTGRES_HOST: $DB_HOST
       POSTGRES_DATABASE: $AUTH_DB
+      ACCESS_TOKEN_SECRET_KEY: $ACCESS_TOKEN_SECRET_KEY
+      REFRESH_TOKEN_SECRET_KEY: $REFRESH_TOKEN_SECRET_KEY
 
-  redis:
-    container_name: redischatapp
-    image: "redislabs/redismod"
-    ports:
-      - 6379:6379
-    volumes:
-      - ./redisdata:/data
-    entrypoint:
-      redis-server
-        --loadmodule /usr/lib/redis/modules/redisearch.so
-        --appendonly yes
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+  # redis:
+  #   container_name: redischatapp
+  #   image: "redislabs/redismod"
+  #   ports:
+  #     - 6379:6379
+  #   volumes:
+  #     - ./redisdata:/data
+  #   entrypoint:
+  #     redis-server
+  #       --loadmodule /usr/lib/redis/modules/redisearch.so
+  #       --appendonly yes
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
