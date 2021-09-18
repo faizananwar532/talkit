@@ -34,7 +34,7 @@ services:
     environment:
       ADMINER_DEFAULT_SERVER: postgres
 
-  #frontend app
+  # #frontend app
   # web:
   #   build: web/
   #   restart: always
@@ -68,7 +68,7 @@ services:
     container_name: redischatapp
     image: "redislabs/redismod"
     ports:
-      - 6379:6379
+      - $REDIS_PORT:$REDIS_PORT
     volumes:
       - ./backend/redisdata:/data
     entrypoint:
@@ -79,6 +79,32 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+
+  # notification:
+  #   build: ./backend/notification
+  #   container_name: notification
+  #   command: sh ./docker-entrypoint.sh
+  #   restart: always
+  #   ports: 
+  #   - 5000:5000
+  #   depends_on: 
+  #   - db
+  #   - redis
+  #   environment: 
+  #     PORT: 5000
+  #     USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
+
+  chat:
+    build: backend/chat/
+    container_name: chat
+    ports:
+      - $CHAT_PORT:$CHAT_PORT
+    command: sh ./docker-entrypoint.sh
+    restart: always
+    environment:
+      CHAT_PORT: $CHAT_PORT
+      REDIS_PORT: $REDIS_PORT
+      AUTH_PORT: 4000
 
   notification:
     build: ./backend/notification
