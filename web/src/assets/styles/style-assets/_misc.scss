@@ -3,3 +3,14 @@
   // //   width: 1920px;
   // }
 }
+
+.hide-scroll {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width   : none;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  background: transparent;
+  width     : 0;
+}

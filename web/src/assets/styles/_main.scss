@@ -9,9 +9,18 @@
 //*********************Mixins
 @import "./mixins/typegraphyMixin";
 
+//******************Pages
+@import "./pages/chat/chatPanelContainer";
+@import "./pages/chat/leftPanel";
+@import "./pages/chat/chatPanel";
+@import "./pages/chat/rightPanel";
+
 //******************Components
-// @import './components/navbar';
+@import './components/LeftPanel/sideNavbar';
+@import './components/LeftPanel/chatRoomSelectionPanel';
+@import './components/RightPanel/chanelDetails';
 
 //*****************Sub-Components
 @import "./sub-components/button";
 @import "./sub-components/input";
+@import "./sub-components/search";
