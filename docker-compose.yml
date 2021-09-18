@@ -45,6 +45,7 @@ services:
 
   auth:
     build: ./backend/auth
+    container_name: auth
     command: sh ./docker-entrypoint.sh
     restart: always
     ports: 
@@ -52,25 +53,41 @@ services:
     depends_on: 
     - db
     environment: 
+      PORT: 4000
       POSTGRES_USERNAME: $DB_USERNAME
       POSTGRES_PASSWORD: $DB_PASSWORD
       POSTGRES_HOST: $DB_HOST
       POSTGRES_DATABASE: $AUTH_DB
       ACCESS_TOKEN_SECRET_KEY: $ACCESS_TOKEN_SECRET_KEY
       REFRESH_TOKEN_SECRET_KEY: $REFRESH_TOKEN_SECRET_KEY
+      USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
 
-  # redis:
-  #   container_name: redischatapp
-  #   image: "redislabs/redismod"
-  #   ports:
-  #     - 6379:6379
-  #   volumes:
-  #     - ./redisdata:/data
-  #   entrypoint:
-  #     redis-server
-  #       --loadmodule /usr/lib/redis/modules/redisearch.so
-  #       --appendonly yes
-  #   deploy:
-  #     replicas: 1
-  #     restart_policy:
-  #       condition: on-failure
+  redis:
+    container_name: redischatapp
+    image: "redislabs/redismod"
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redisdata:/data
+    entrypoint:
+      redis-server
+        --loadmodule /usr/lib/redis/modules/redisearch.so
+        --appendonly yes
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  notification:
+    build: ./backend/notification
+    container_name: notification
+    command: sh ./docker-entrypoint.sh
+    restart: always
+    ports: 
+    - 5000:5000
+    depends_on: 
+    - db
+    - redis
+    environment: 
+      PORT: 5000
+      USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
