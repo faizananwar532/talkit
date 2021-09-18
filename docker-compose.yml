@@ -105,6 +105,7 @@ services:
       CHAT_PORT: $CHAT_PORT
       REDIS_PORT: $REDIS_PORT
       AUTH_PORT: 4000
+      REDIS_SERVER: $REDIS_SERVER
 
   notification:
     build: ./backend/notification
