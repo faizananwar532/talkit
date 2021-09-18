@@ -3,7 +3,7 @@ const exceptionHandler = require('../utilities/Exceptions');
 const { generateAccessToken, generateRefreshToken, validateToken, generateActivationToken } = require('../utilities/Authentication');
 const User = require('../models/User');
 const KeyMaster = require('../utilities/KeyMaster');
-const { publicOnRedisChannel } = require('../utilities/RedisStream');
+const { publishOnRedisChannel } = require('../utilities/RedisStream');
 
 /**
  * 
@@ -38,7 +38,7 @@ const register = async function ({ username, email, password }, origin) {
 
 		delete user['password'];
 
-		publicOnRedisChannel(process.env.USER_CREATED_CHANNEL, { data: user, activation_link: activationLink });
+		publishOnRedisChannel(process.env.USER_CREATED_CHANNEL, { data: user, activation_link: activationLink });
 
 		const { access_token, expiration_timestamp } = generateAccessToken(user);
 		const refreshToken = generateRefreshToken(user);

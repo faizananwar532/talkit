@@ -20,7 +20,7 @@ subcli.on('error', function (error) {
 
 subcli.subscribe(process.env.USER_CREATED_CHANNEL);
 
-exports.publicOnRedisChannel = (channel, data) => {
+exports.publishOnRedisChannel = (channel, data) => {
 
 	pubcli.publish(channel, JSON.stringify(data));
 
