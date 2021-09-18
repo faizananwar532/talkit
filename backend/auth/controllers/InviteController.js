@@ -15,9 +15,9 @@ const inviteUser = async function ({ email }, { username }) {
 		const user = await User.query().findOne({ email: email });
 
 		if (!user) {
-			publishOnRedisChannel('user_invitation', { email, username });
+			publishOnRedisChannel('user_invitation', { email, invited_by: username });
 		}
-		return { result: { status: KeyMaster.API_CODES.SUCCESS, data: {user, message: !user && 'Invitation has been sent'} } };
+		return { result: { status: KeyMaster.API_CODES.SUCCESS, data: { user, message: !user && 'Invitation has been sent' } } };
 
 	} catch (err) {
 		return { error: getError(err) };
