@@ -1,0 +1,144 @@
+---
+kind: pipeline
+type: docker
+name: build
+
+trigger:
+  branch:
+  - main
+  event:
+  - push
+  - pull_request
+
+steps:
+  - name: build-auth
+    pull: if-not-exists
+    image: google/cloud-sdk:latest
+    environment:
+      DRONE_SA:
+        from_secret: st-drone
+    depends_on: [ clone ]
+    commands:
+    - echo $DRONE_SA | base64 -d > gcp-key.json
+    - gcloud auth activate-service-account --key-file gcp-key.json
+    - gcloud config set core/project talkit-main
+    - cd backend/auth
+    - gcloud builds submit --config=cloudbuild.yaml --substitutions=_COMMIT_SHA=${DRONE_COMMIT:0:7}
+  
+  - name: build-web
+    pull: if-not-exists
+    image: google/cloud-sdk:latest
+    environment:
+      DRONE_SA:
+        from_secret: st-drone
+    depends_on: [ clone ]
+    commands:
+    - echo $DRONE_SA | base64 -d > gcp-key.json
+    - gcloud auth activate-service-account --key-file gcp-key.json
+    - gcloud config set core/project talkit-main
+    - sh web/mountFiles.sh
+    - cd web
+    - gcloud builds submit --config=cloudbuild.yaml --substitutions=_COMMIT_SHA=${DRONE_COMMIT:0:7}
+
+---
+kind: pipeline
+type: docker
+name: production
+
+trigger:
+  branch: 
+  - main
+  event:
+  - pushxxx
+  - pull_requestxxx
+
+depends_on:
+- build
+
+steps:
+  - name: deploy_talkit
+    pull: if-not-exists
+    image: google/cloud-sdk:latest
+    environment:
+      DRONE_SA:
+        from_secret: st-drone
+      GOOGLE_APP_SA:
+        from_secret: st-gac
+      POSTGRES_PASSWORD:
+        from_secret: st-postgresql-password
+      ACCESS_TOKEN_SECRET_KEY: 
+        from_secret: st-access-token-key
+      REFRESH_TOKEN_SECRET_KEY: 
+        from_secret: st-refresh-token-key
+      RESET_PASSWORD_TOKEN_SECRET_KEY: 
+        from_secret: st-reset-password-key
+      COOKIE_SECRETE_KEY: 
+        from_secret: st-cookie-key
+      USER_ACTIVATION_TOKEN_SECRET_KEY:
+        from_secret: st-user-activation-key
+      GOOGLE_OAUTH_CLIENT_ID:
+        from_secret: st-google-oauth-client-id
+      GOOGLE_OAUTH_CLIENT_SECRET:
+        from_secret: st-google-oauth-client-secret
+      KAFKA_USERNAME:
+        from_secret: st-kafka-username
+      KAFKA_PASSWORD:
+        from_secret: st-kafka-password
+      MG_API_KEY:
+        from_secret: mg-private-key
+    depends_on: [ clone ]
+    commands:
+    - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh
+    - echo $DRONE_SA | base64 -d > gcp-key.json
+    - gcloud auth activate-service-account --key-file gcp-key.json
+    - gcloud config set core/project talkit-main
+    - gcloud container clusters get-credentials staging --zone us-central1-a --project talkit-main
+    - kubectl config use-context gke_altrunic-main_us-central1-a_staging
+    - cd infra/main-chart
+    - helm repo add datawire https://www.getambassador.io
+    - helm dependency update
+    - helm upgrade --install staging . --namespace staging --set namespace="staging" --set tag="${DRONE_COMMIT:0:7}" --set autoscaling.enabled=false --set ambassador.autoscaling.enabled=false --set postgresql.postgresqlPassword="$POSTGRES_PASSWORD" --set google.sa_key="$GOOGLE_APP_SA" --set rudderstack.key="$RUDDERSTACK_WRITE_KEY" --set rudderstack.webWriteKey="$RUDDERSTACK_WEB_WRITE_KEY" --set intercom.key="$INTERCOM_KEY" --set intercom.appID="$INTERCOM_APP_ID" --set secrets.accessTokenKey="$ACCESS_TOKEN_SECRET_KEY" --set secrets.refreshTokenKey="$REFRESH_TOKEN_SECRET_KEY" --set secrets.resetPasswordKey="$RESET_PASSWORD_TOKEN_SECRET_KEY" --set secrets.cookieKey="$COOKIE_SECRETE_KEY" --set google.oauthClientID="$GOOGLE_OAUTH_CLIENT_ID" --set google.oauthClientSecret="$GOOGLE_OAUTH_CLIENT_SECRET" --set azure.oauthClientID="$AZURE_OAUTH_CLIENT_ID" --set azure.oauthClientSecret="$AZURE_OAUTH_CLIENT_SECRET" --set azure.oauthTenantID="$AZURE_OAUTH_TENANT_ID" --set kafka.userName="$KAFKA_USERNAME" --set kafka.password="$KAFKA_PASSWORD" --set mailgun.apiKey="$MG_API_KEY"  --set mongo.password="$MONGO_PASSWORD" --set mongo.host="$MONGO_HOST" --set stripe.secretKey="$STRIPE_SECRET_KEY" --set stripe.webhookSecret="$STRIPE_WEBHOOK_SECRET" --set stripe.destinationAccount="$STRIPE_DESTINATION_ACCOUNT" --set stripe.donationwebhook="$STRIPE_DONATION_WEBHOOK" --set stripe.subscriptionWebhookSecret="$STRIPE_SUBSCRIPTION_WEBHOOK" --set aws.accessKeyID="$AWS_ACCESS_KEY" --set aws.secretKeyID="$AWS_SECRET_KEY" --set secrets.userActivationTokenKey="$USER_ACTIVATION_TOKEN_SECRET_KEY" --set cloudflare.configEmail="$CLOUDFLARE_EMAIL" --set cloudflare.apiKey="$CLOUDFLARE_API_KEY" --set cloudflare.apiToken="$CLOUDFLARE_API_TOKEN" --set cloudflare.zoneId="$CLOUDFLARE_ZOND_ID"
+---
+kind: pipeline
+type: docker
+name: staging-alert
+
+clone:
+  disable: true
+
+depends_on:
+- staging
+
+trigger:
+  branch:
+  - main
+  event:
+  - pushxxxx
+  status:
+  - success
+  - failure
+
+steps:
+- name: slack-alert
+  pull: if-not-exists
+  image: plugins/slack
+  settings:
+    webhook: 
+    channel: talkit
+    link_names: true
+    template: >
+      {{#success build.status}}
+        *{{#success build.status}}✔{{ else }}✘{{/success}} {{ uppercasefirst build.status }}*
+        Your branch has been deployed to Staging successfully. Good job {{build.author}}. 
+        Details at {{build.link}}.
+        To visit staging, please visit: https://talkit.fun
+      {{else}}
+        *{{#success build.status}}✔{{ else }}✘{{/success}} {{ uppercasefirst build.status }}: Build #{{ build.number }}* (type: `{{ build.event }}`)
+        Pipeline {{build.number}} for branch {{build.branch}} failed. Please fix me {{build.author}}. Details at {{build.link}}.
+      {{/success}}
+
+---
+kind: signature
+hmac: 4d06c65ae8026ae6e2dd47d2b4f7fbbd26c2f5b03a460074e4ad3bc2ab8e09fe
+
+...
