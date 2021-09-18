@@ -11,30 +11,30 @@ services:
   #   environment:
   #     - AMBASSADOR_NO_KUBEWATCH=no_kubewatch
 
-  db:
-    image: postgres
-    container_name: postgresdb
-    restart: always
-    ports: 
-    - $POSTGRES_PORT:$POSTGRES_PORT
-    environment:
-      POSTGRES_PASSWORD: $DB_PASSWORD
-      POSTGRES_USER: $DB_USERNAME
-      POSTGRES_DB: $AUTH_DB
-    volumes: 
-    - ./backend/pgdata:/var/lib/postgresql/data
+  # db:
+  #   image: postgres
+  #   container_name: postgresdb
+  #   restart: always
+  #   ports: 
+  #   - $POSTGRES_PORT:$POSTGRES_PORT
+  #   environment:
+  #     POSTGRES_PASSWORD: $DB_PASSWORD
+  #     POSTGRES_USER: $DB_USERNAME
+  #     POSTGRES_DB: $AUTH_DB
+  #   volumes: 
+  #   - ./backend/pgdata:/var/lib/postgresql/data
 
-  #database management tool 
-  adminer:
-    image: adminer
-    container_name: adminer
-    restart: always
-    ports:
-      - $MACHINE_ADMINER_PORT:$ADMINER_PORT
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres
+  # #database management tool 
+  # adminer:
+  #   image: adminer
+  #   container_name: adminer
+  #   restart: always
+  #   ports:
+  #     - $MACHINE_ADMINER_PORT:$ADMINER_PORT
+  #   environment:
+  #     ADMINER_DEFAULT_SERVER: postgres
 
-  #frontend app
+  # #frontend app
   # web:
   #   build: web/
   #   restart: always
@@ -43,32 +43,27 @@ services:
   #   environment:
   #     REACT_APP_GW_URL: http://localhost:3000
 
-  auth:
-    build: ./backend/auth
-    container_name: auth
-    command: sh ./docker-entrypoint.sh
-    restart: always
-    ports: 
-    - 4000:4000
-    depends_on: 
-    - db
-    environment: 
-      PORT: 4000
-      POSTGRES_USERNAME: $DB_USERNAME
-      POSTGRES_PASSWORD: $DB_PASSWORD
-      POSTGRES_HOST: $DB_HOST
-      POSTGRES_DATABASE: $AUTH_DB
-      ACCESS_TOKEN_SECRET_KEY: $ACCESS_TOKEN_SECRET_KEY
-      REFRESH_TOKEN_SECRET_KEY: $REFRESH_TOKEN_SECRET_KEY
-      USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
+  # auth:
+  #   build: ./backend/auth
+  #   command: sh ./docker-entrypoint.sh
+  #   restart: always
+  #   ports: 
+  #   - 4000:4000
+  #   depends_on: 
+  #   - db
+  #   environment: 
+  #     POSTGRES_USERNAME: $DB_USERNAME
+  #     POSTGRES_PASSWORD: $DB_PASSWORD
+  #     POSTGRES_HOST: $DB_HOST
+  #     POSTGRES_DATABASE: $AUTH_DB
 
   redis:
     container_name: redischatapp
     image: "redislabs/redismod"
     ports:
-      - 6379:6379
+      - $REDIS_PORT:$REDIS_PORT
     volumes:
-      - ./redisdata:/data
+      - ./backend/redisdata:/data
     entrypoint:
       redis-server
         --loadmodule /usr/lib/redis/modules/redisearch.so
@@ -78,16 +73,28 @@ services:
       restart_policy:
         condition: on-failure
 
-  notification:
-    build: ./backend/notification
-    container_name: notification
+  chat:
+    build: backend/chat/
+    container_name: chat
+    ports:
+      - $CHAT_PORT:$CHAT_PORT
     command: sh ./docker-entrypoint.sh
     restart: always
-    ports: 
-    - 5000:5000
-    depends_on: 
-    - db
-    - redis
-    environment: 
-      PORT: 5000
-      USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
+    environment:
+      CHAT_PORT: $CHAT_PORT
+      REDIS_PORT: $REDIS_PORT
+
+  # redis:
+  #   container_name: redis
+  #   hostname: redis
+  #   image: redis
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+    - REDIS_HOSTS=local:redischatapp:6379
+    ports:
+    - "8081:8081"
