@@ -37,7 +37,7 @@ const generateAccessToken = function (user) {
 	const accessTokenExpirationTime = Math.floor(Date.now() / 1000) + (60 * 60); //3600 = 1 hours
 	const accessTokenScerete = process.env.ACCESS_TOKEN_SECRET_KEY || 'secretaccess';
 
-	const token = getToken({ id: user.id, email: user.email }, accessTokenExpirationTime, accessTokenScerete);
+	const token = getToken({ user_id: user.id, username: user.username, email: user.email }, accessTokenExpirationTime, accessTokenScerete);
 
 	return { access_token: token, expiration_timestamp: accessTokenExpirationTime };
 };
@@ -52,7 +52,7 @@ const generateRefreshToken = function (user) {
 	const refreshTokenExpirationTime = Math.floor(Date.now() / 1000) + (3600 * (24 * 7)); //3600 * (24 * 7) = 7 days
 	const refreshTokenSecrete = process.env.REFRESH_TOKEN_SECRET_KEY || 'secretrefresh';
 
-	return getToken({ id: user.id, email: user.email }, refreshTokenExpirationTime, refreshTokenSecrete);
+	return getToken({ user_id: user.id, username: user.username, email: user.email }, refreshTokenExpirationTime, refreshTokenSecrete);
 
 };
 

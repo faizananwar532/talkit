@@ -11,7 +11,7 @@ router.post('/verify', authenticateToken, async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
 
-	req.response = await authController.register(req.body, req.headers.origin);
+	req.response = await authController.register(req.body, req.headers.origin || 'https://talkit.fun');
 
 	next();
 

@@ -124,7 +124,7 @@ const refreshToken = async function ({ refresh_token }) {
 
 		const tokenData = validateToken(refresh_token, process.env.REFRESH_TOKEN_SECRET_KEY);
 
-		await User.query().findOne({ email: tokenData.user.email }).throwIfNotFound();
+		await User.query().findOne({ username: tokenData.user.username }).throwIfNotFound();
 
 		const { access_token, expiration_timestamp } = generateAccessToken(tokenData.user);
 
