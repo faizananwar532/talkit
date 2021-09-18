@@ -2,37 +2,28 @@
 Author: Ammar Saqib
 """
 
-import asyncio
-
-import aioredis
+import logging
+import redis
 import async_timeout
 from controllers.chat_controller import ChatController
 
-from database import get_db
+from app.database import get_db
+
+_db = get_db()
 
 
-def start():
+def start_consumer():
     """
     Starts the consumption logic from the auth app
     """
-    _db = get_db()
+    logging.error("starting consumer")
     pub_sub = _db.pubsub()
+    pub_sub.subscribe("user_created")
 
-    async def reader(channel: aioredis.client.PubSub):
-        while True:
-            try:
-                async with async_timeout.timeout(1):
-                    message = await channel.get_message(ignore_subscribe_messages=True)
-                    if message is not None:
-
-                        _ = ChatController(_db).add_user(message)
-
-                    await asyncio.sleep(0.01)
-
-            except asyncio.TimeoutError:
-                pass
-
-    async with pub_sub as p:
-        await p.subscribe("user_created")
-        await reader(p)  # wait for reader to complete
-        # await p.unsubscribe("channel:1")
+    while True:
+        message = pub_sub.get_message()
+        if message is not None:
+            if not isinstance(message["data"], int):
+                logging.error(message["data"])
+                message["data"] = message["data"].decode("utf-8")
+                _ = ChatController(_db).add_user(message["data"])
