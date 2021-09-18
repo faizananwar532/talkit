@@ -30,6 +30,8 @@ exports.crossOriginResource = async function (req, res, next) {
 
 exports.authenticateToken = function (req, res, next) {
 
+	console.log('Requested');
+
 	const authorizationHeader = req.headers['authorization'];
 
 	const accessToken = authorizationHeader && authorizationHeader.split(' ')[1];

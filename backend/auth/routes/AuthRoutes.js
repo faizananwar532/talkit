@@ -4,7 +4,7 @@ const authController = require('./../controllers/AuthController');
 
 router.post('/verify', authenticateToken, async (req, res, next) => {
 
-	req.response = { result: { status: 200, data: { success: true } } };
+	req.response = { result: { status: 200, data: { user: req.user } } };
 	next();
 
 });
@@ -26,6 +26,14 @@ router.post('/login', async (req, res, next) => {
 });
 
 router.post('/refresh', async (req, res, next) => {
+
+	req.response = await authController.refreshToken(req.body);
+
+	next();
+
+});
+
+router.post('/activate', async (req, res, next) =>{
 
 	req.response = await authController.refreshToken(req.body);
 
