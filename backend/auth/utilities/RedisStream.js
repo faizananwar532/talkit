@@ -1,6 +1,6 @@
 const redis = require('redis');
 
-const pubcli = redis.createClient(6379, 'redischatapp');
+const pubcli = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_SERVER);
 
 exports.publishOnRedisChannel = (channel, data) => {
 

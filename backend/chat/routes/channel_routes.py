@@ -2,12 +2,12 @@
 Author: Ammar Saqib
 """
 import logging
-import asyncio
-from controllers.chat_controller import ChatController
+
 from app.database import get_db
 from app.schemas import ChannelDetails, ChannelName
-from fastapi import APIRouter, Header, Response, Depends
 from app.utitilies import verification_details
+from controllers.chat_controller import ChatController
+from fastapi import APIRouter, Depends, Header, Response
 
 router = APIRouter(prefix="/v1/channels", tags=["Channels"])
 
