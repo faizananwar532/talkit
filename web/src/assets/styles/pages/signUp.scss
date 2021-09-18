@@ -1,0 +1,15 @@
+.sign-up {
+	width: 100vw;
+	height: 100vw;
+}
+
+.signup-container {
+	width: 25%;
+	height: auto;
+	min-height: 550px;
+	padding: 20px 30px;
+	border-radius: 12px;
+	background-color: $primaryColor;
+	display: flex;
+	flex-direction: column;
+}
