@@ -1,8 +1,8 @@
-FROM python:3.8
+FROM python:3.9
 
 WORKDIR /app
 
-RUN pip3 install --upgrade pip3
+RUN pip3 install --upgrade pip
 
 COPY requirements.txt .
 

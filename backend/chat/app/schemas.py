@@ -1,3 +1,9 @@
-from datetime import datetime
-from enum import Enum
-from typing import Dict, List, Optional, Tuple
+"""
+Author: Ammar Saqib
+"""
+
+from pydantic import BaseModel
+
+
+class TenantDetail(BaseModel):
+    name: str
