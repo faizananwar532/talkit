@@ -12,11 +12,13 @@ class ChatController:
     """
 
     USER_HASH_PREFIX = "user:"
-    USERNAME_HASH = "usernames"
+    USERNAME_SET = "usernames"
 
     CHANNELS_SET = "channels"
     CHANNEL_HASH_PREFIX = CHANNELS_SET[:-1] + ":"
     USER_CHANNELS_POSTFIX = ":" + CHANNELS_SET
+
+    CHAT_CHANNEL_PARTICIPANTS = "channel:{}:participants"
 
     def __init__(self, _db):
         self.__db = _db  # for storing the redis db object
@@ -93,9 +95,13 @@ class ChatController:
         """
 
         try:
+            # adding channel association with user
             _data = self.__db.sadd(
                 "{}:{}".format(user_name, self.CHANNELS_SET), channel_name.name
             )
+
+            # adding user to the channel
+            _ = self.__db.sadd(self.CHAT_CHANNEL_PARTICIPANTS, user_name)
         except:
             return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
 
@@ -121,6 +127,15 @@ class ChatController:
         _data = [x.decode("utf-8") for x in _data]
 
         return status.HTTP_200_OK, _data
+
+    def send_to_channel(self, channel, message):
+    """
+    This function adds the message to the appropriate channel
+    """
+
+    try:
+        
+
 
     def add_user(self, _data):
         """
@@ -149,7 +164,7 @@ class ChatController:
             self.__db.hset(
                 "{}{}".format(self.USER_HASH_PREFIX, user_name), mapping=_data
             )
-            self.__db.sadd(self.USERNAME_HASH, user_name)
+            self.__db.sadd(self.USERNAME_SET, user_name)
 
         except Exception as e:
             logging.error(e)
