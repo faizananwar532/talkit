@@ -16,6 +16,10 @@
 	}
 }
 
+.button-primary:disabled {
+	background-color: $primaryLight;
+}
+
 .button-secondary {
 	background-color: $grey0;
 	padding         : 10px 30px;
@@ -36,5 +40,30 @@
 			@extend .headline1;
 			color: $grey8 !important;
 		}
+	}
+}
+
+.processing {
+
+	display      : block;
+	height       : 15px;
+	width        : 15px;
+	float        : left;
+	margin-top   : 5px;
+	border       : 2px solid #FFFFFF;
+	border-top   : 2px solid transparent;
+	border-radius: 100%;
+	animation    : loader 0.5s linear 0s infinite;
+
+}
+
+@keyframes loader {
+
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
 	}
 }

@@ -7,17 +7,20 @@ import React from "react";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ChatPanelContainer from "./Chat/ChatPanelContainer";
+import AuthProvider from "../context/Authentication";
 
 function App() {
 
 	return (
 		<div className="App">
 			<Router>
-				<Switch>
-					<Route exact path="/signin" component={SignIn} />
-					<Route exact path="/signup" component={SignUp} />
-					<Route exact path="/" component={ChatPanelContainer} />
-				</Switch>
+				<AuthProvider>
+					<Switch>
+						<Route exact path="/signin" component={SignIn} />
+						<Route exact path="/signup" component={SignUp} />
+						<Route exact path="/" component={ChatPanelContainer} />
+					</Switch>
+				</AuthProvider>
 			</Router>
 		</div>
 	);

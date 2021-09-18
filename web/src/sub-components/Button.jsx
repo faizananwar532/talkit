@@ -4,7 +4,18 @@ import React from "react";
 export default function Button(props) {
 	if (props.primary) {
 		return (
-			<button className={`${props.className} button-primary`} onClick={props.onClick} style={props.style}>{props.label || "Label"}</button>
+			<button
+				disabled={props.processing}
+				className={`${props.className} button-primary`}
+				onClick={props.onClick}
+				style={props.style}
+				type={props.type}
+			>
+				{props.processing && (
+					<span className="processing" />
+				)}
+				{props.label || "Label"}
+			</button>
 		);
 	}
 	else if (props.secondary) {
