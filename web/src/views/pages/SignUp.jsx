@@ -1,170 +1,134 @@
 import React, { useState } from "react";
-import { isEmailValid, isPasswordValid } from "./../../utils/Utilites";
+import { Link } from "react-router-dom";
 import Button from "../../sub-components/Button";
 import Input from "../../sub-components/Input";
-import {authBaseUrl} from "./../../utils/BaseURL";
+import SignUpImage from "../../assets/icons/Signup.png";
+import {ReactComponent as Logo} from "../../assets/icons/logo/Logo.svg";
+import {ReactComponent as Arrow} from "../../assets/icons/arrows/shape.svg";
+import Googlelogo from "../../assets/icons/logo/Google Icon.svg";
+import FacebookLogo from "../../assets/icons/logo/Facebook Icon.svg";
 
-export default function SignUp(){
 
+export default function SignIn(){
 	const [user, setUser] = useState({
-		first_name: "",
-		last_name: "",
-		username: "",
-		email: "",
-		password: "",
-		confirm_password: ""
+		email: null,
+		password: null,
+	});
+    
+	const [errors, setErrors] = useState({
+		email: false,
+		password: false,
+		invalid: false
 	});
 
-	const [error, setError] = useState();
-	const [success, setSuccess] = useState();
-
-	const handleInput = (event) => {
-
-		setUser({ ...user, [event.target.name]: event.target.value });
-
-	};
-
-	const validateForm = () => {
-
-		if (!user.first_name) {
-			return { isValid: false, message: "First Name is required" };
-		}
-
-		if (!user.last_name) {
-			return { isValid: false, message: "Last name is required" };
-		}
-
-		if (!user.email || !isEmailValid(user.email)) {
-			return { isValid: false, message: "Email is Invalid" };
-		}
-
-		if (!user.password || !isPasswordValid(user.password)) {
-			return {
-				isValid: false, title: "Weak password", message: [
-					<ul key="1">
-						<li key="2">Password should contain atleast 1 special charater</li>
-						<li key="4">Password should contain minimum 10 charaters</li>
-					</ul>
-				]
-			};
-		}
-
-		if (user.password !== user.confirm_password) {
-			return { isValid: false, message: "Password did not match" };
-		}
-
-		return { isValid: true, message: "" };
-
-	};
-
-	const handleSubmit = async (event) => {
-
-		setError(null);
-		setSuccess(null);
-
-		event.preventDefault();
-
-		const validation = validateForm();
-
-		if (!validation.isValid) {
-			setError(validation.message);
-			return;
-		}
-
-		delete user["confirm_password"];
-
-		const response = await fetch(`${authBaseUrl}/auth/signup/`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"Accept": "application/json"
-			},
-			body: JSON.stringify(user)
-		});
-
-		const json = await response.json();
-
-		if (!response.ok) {
-			setError(json.message);
-		} else {
-			setSuccess("Signup successful");
-		}
-
-
-	};
-
 	return(
-		<div className="signup-container">
-			<div>
-				<span className="headline4">Sign Up</span>
+		<div className="signup-wrapper">
+			<div className="signup-image-container">
+				<img
+					src={SignUpImage}
+					alt=""
+				/>
 			</div>
-			<form onSubmit={handleSubmit}>
-				<div >
+        
+			<div className="signup-container">
+				<div>
+					<Logo/>
+				</div>
+				<div className="header">
+					<span className="pr-2">Sign Up</span>
+					<Arrow/>
+				</div>
+				<div className="d-flex mt-5 w-100 justify-content-between" >
 					<Input
 						label="First Name"
 						type="text"
-						name="first_name"
-						placeholder="Enter first name"
-						onChange={handleInput}
+						name="firstname"
+						style={{width:"48%"}}
 					/>
-				</div>
-				<div className="mt-3">
 					<Input
 						label="Last Name"
 						type="text"
-						name="last_name"
-						placeholder="Enter last name"
-						onChange={handleInput}
+						name="lastname"
+						style={{width:"48%"}}
 					/>
 				</div>
-				<div className="mt-3">
-					<Input
-						label="Username"
-						type="text"
-						name="username"
-						placeholder="Enter Username"
-						onChange={handleInput}
-					/>
-				</div>
-				<div className="mt-3">
+                    
+				<div className="mt-5">
 					<Input
 						label="Email"
 						type="text"
 						name="email"
-						placeholder="Enter email"
-						onChange={handleInput}
 					/>
 				</div>
-				<div className="mt-3">
+				<div className="d-flex mt-5 w-100 justify-content-between">
+					
 					<Input
 						label="Password"
-						type="password"
+						type="text"
 						name="password"
-						placeholder="Enter password"
-						onChange={handleInput}
+						style={{width:"48%"}}
 					/>
-				</div>
-				<div className="mt-3">
+					
+					
 					<Input
 						label="Confirm Password"
-						type="password"
-						name="confirm_password"
-						placeholder="Confirm password"
-						onChange={handleInput}
+						type="text"
+						name="confirmpassword"
+						style={{width:"48%"}}
 					/>
+					
 				</div>
-				<div className="pt-4 pb-4">
-					<Button primary label="Sign Up" style={{ backgroundColor: "#EA5D5F" }} type="submit" processing={true}/>
+				<div className="pt-5 pb-4">
+					<Button style={{width:"100%", color:"white", padding:"15px" }} primary label="Sign Up"/>
 				</div>
-			</form>
-
-			{error && (
-				<span style={{ color: "#FFFFFF" }}>{error}</span>
-			)}
-			{success && (
-				<span style={{ color: "#00FF00" }}>{success}</span>
-			)}
-
+				<div className="line-container">
+					<div className="line-style">
+						<span>or</span> 
+					</div>
+				</div>
+				<div className="mt-4 mb-4">
+					<Button secondary logo={Googlelogo} label="Continue with Google"/>
+				</div>
+				<div className="mt-1 mb-4">
+					<Button secondary logo={FacebookLogo} label="Continue with Facebook"/>
+				</div>
+				<div>
+					<span>Already a member?<Link to="/signin" style={{color: "#D92B21"}}>Sign In</Link></span>
+				</div>
+			</div>
 		</div>
 	);
 }
+
+
+				
+			
+// <div className="mt-3">
+				
+// </div>
+// <div className="mt-3">
+// 	<Input
+// 		label="Username"
+// 		type="text"
+// 		name="username"
+// 		placeholder="Enter Username"
+// 	/>
+// </div>
+// <div className="mt-3">
+// 	<Input
+// 		label="Email"
+// 		type="text"
+// 		name="email"
+// 		placeholder="Enter email"
+// 	/>
+// </div>
+			
+// <div className="mt-3">
+// 	<Input
+// 		label="Confirm Password"
+// 		type="text"
+// 		name="confirmpassword"
+// 		placeholder="Confirm password"
+// 	/>
+// </div>
+			

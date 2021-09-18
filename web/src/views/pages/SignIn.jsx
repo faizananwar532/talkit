@@ -43,7 +43,7 @@ export default function SignIn(){
 						label="Email"
 						type="text"
 						name="email"
-						placeholder="Enter email address"
+						
 					/>
 				</div>
 				<div className="mt-5">
@@ -51,7 +51,6 @@ export default function SignIn(){
 						label="Password"
 						type="text"
 						name="password"
-						placeholder="Enter password"
 					/>
 				</div>
 				<div className="pt-5 pb-4">
