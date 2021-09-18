@@ -55,5 +55,5 @@ databases:
   auth: auth
 
 ports:
-  sternguard: 4000
+  auth: 4000
   web: 80
