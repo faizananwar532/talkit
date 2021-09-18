@@ -3,6 +3,7 @@ const exceptionHandler = require('../utilities/Exceptions');
 const { generateAccessToken, generateRefreshToken, validateToken } = require('../utilities/Authentication');
 const User = require('../models/User');
 const KeyMaster = require('../utilities/KeyMaster');
+const { publicOnRedisChannel } = require('../utilities/RedisStream');
 
 /**
  * 
@@ -27,10 +28,13 @@ const register = async function ({ username, email, password }) {
 
 		const user = await User.query().insert({ username, email: email.toLowerCase(), password: hashPassword, is_active: true });
 
-		//Create activation link for the user
+		// Create activation link for the user
 		// const activationToken = generateActivationToken(data.user.email);
 		// const activationLink = `${origin}/activation/${activationToken}`;
 
+		delete user['password'];
+
+		publicOnRedisChannel(process.env.USER_CREATED_CHANNEL, { data: user });
 
 		const { access_token, expiration_timestamp } = generateAccessToken(user);
 		const refreshToken = generateRefreshToken(user);
@@ -43,7 +47,6 @@ const register = async function ({ username, email, password }) {
 					access_token: access_token,
 					expiration_timestamp: expiration_timestamp,
 					refresh_token: refreshToken,
-					// activation_token: activationToken,
 				}
 			}
 		};
@@ -126,7 +129,6 @@ const refreshToken = async function ({ refresh_token }) {
 				status: KeyMaster.API_CODES.SUCCESS,
 				data: {
 					user_id: tokenData.user.id,
-					tenant_id: tokenData.user.tenant_id,
 					access_token: access_token,
 					expiration_timestamp: expiration_timestamp,
 				}

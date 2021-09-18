@@ -5,6 +5,9 @@ const databaseConfig = require('./database/DatabaseConfig');
 const authRoutes = require('./routes/AuthRoutes');
 const inviteRoutes = require('./routes/InviteRoutes');
 
+
+
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));

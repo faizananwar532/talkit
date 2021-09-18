@@ -1,5 +1,12 @@
 const router = require('express').Router();
+const { authenticateToken } = require('../utilities/Middleware');
 const authController = require('./../controllers/AuthController');
+
+router.post('/verify', authenticateToken, async (req, res, next) => {
+
+	next();
+
+});
 
 router.post('/signup', async (req, res, next) => {
 
