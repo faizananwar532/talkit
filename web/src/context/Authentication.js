@@ -6,7 +6,13 @@ import { getCookie } from "../utils/Utilites";
 const AuthContext = createContext({
 	access_token: null,
 	token_expires_at: null,
-	user: null
+	user: {
+		id: 1,
+		first_name: "John",
+		last_name: "Wick",
+		username: "johnwick",
+		email: "johnwick@gmail.com",
+	}
 });
 
 export function useAuthentication() {
@@ -20,7 +26,13 @@ export default function AuthProvider({ children }) {
 	const [auth, setAuth] = useState({
 		access_token: null,
 		token_expires_at: null,
-		user: null
+		user: {
+			id: 1,
+			first_name: "John",
+			last_name: "Wick",
+			username: "johnwick",
+			email: "johnwick@gmail.com",
+		}
 	});
 
 	const history = useHistory();
