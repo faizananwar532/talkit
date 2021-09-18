@@ -1,0 +1,9 @@
+steps:
+  - name: gcr.io/kaniko-project/executor:v1.5.1
+    args:
+    - --destination=gcr.io/talkit-prod/web:${_COMMIT_SHA}
+    - --build-arg 
+    - REACT_APP_COMMIT_SHA=${_COMMIT_SHA}
+
+
+
