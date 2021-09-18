@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Search from "../../sub-components/Search";
+import { ReactComponent as AddIcon } from "../../assets/icons/basic/add.svg";
 import user1 from "../../assets/icons/profile/user1.png";
 import user2 from "../../assets/icons/profile/user2.png";
 import user3 from "../../assets/icons/profile/user3.png";
@@ -86,18 +87,25 @@ export default function ChatRoomSelectionPanel() {
 	};
 	return (
 		<div className="chat-room-selection-panel-container">
-			<div className="messages-header">
-				<span className="messages-header-text">Messages</span>
-				{messagesCounterNotification(6)}
-			</div>
+			<div className="w-100 " style={{ padding: "0 30px" }}>
+				<div className="messages-header">
+					<span className="messages-header-text">Messages</span>
+					{messagesCounterNotification(6)}
+				</div>
 
-			<div className="search-container">
-				<Search placeholder="Search" onChange={(e) => { setSearchValue(e.target.value); }} value={searchValue} />
+				<div className="search-container">
+					<Search placeholder="Search" onChange={(e) => { setSearchValue(e.target.value); }} value={searchValue} />
+				</div>
 			</div>
 
 			<div className="all-rooms-container hide-scroll">
 				<div className="channel-rooms-container">
-					<span className="rooms-container-header-text">CHANNELS</span>
+					<div className="rooms-container-header" >
+						<span className="rooms-container-header-text">CHANNELS</span>
+						<div className="addIcon">
+							<AddIcon className="pointer" />
+						</div>
+					</div>
 
 					{
 						channels.map((channel, index) => {
@@ -111,7 +119,12 @@ export default function ChatRoomSelectionPanel() {
 
 				</div>
 				<div className="DM-rooms-container">
-					<span className="rooms-container-header-text">DIRECT MESSAGES</span>
+					<div className="rooms-container-header">
+						<span className="rooms-container-header-text">DIRECT MESSAGES</span>
+						<div className="addIcon pointer">
+							<AddIcon />
+						</div>
+					</div>
 					{
 						DMs.map((channel, index) => {
 							return (

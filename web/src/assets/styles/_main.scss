@@ -19,10 +19,14 @@
 @import "./components/LeftPanel/sideNavbar";
 @import "./components/LeftPanel/chatRoomSelectionPanel";
 @import "./components/RightPanel/chanelDetails";
+@import "./components/RightPanel/channelMembers";
+@import "./components/RightPanel/channelMedia";
+@import "./components/RightPanel/channelAttachments";
 
 //*****************Sub-Components
 @import "./sub-components/button";
 @import "./sub-components/input";
+@import "./sub-components/submenuBtn";
 
 //*****************Pages
 @import "./pages/signIn.scss";

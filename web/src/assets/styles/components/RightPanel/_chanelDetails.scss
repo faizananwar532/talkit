@@ -1,41 +1,71 @@
 .channel-details-container {
-	width: 100%;
-	height: calc(100% - 198px);
+	width           : 100%;
+	height          : calc(100% - 130px);
 	background-color: $grey1;
-	border-radius: 25px 25px 0px 0px;
-	padding: 40px;
-	display: flex;
+	border-radius   : 25px 25px 0px 0px;
+	padding         : 40px 0px 25px 0px;
+	display         : flex;
+	flex-direction  : column;
+
+	.channel-chat-items-container {
+		width          : 100%;
+		display        : flex;
+		flex-direction : column;
+		overflow       : scroll;
+		scroll-behavior: smooth;
+		overflow-x     : hidden;
+		padding        : 0px 40px;
+	}
 
 	.channel-details {
-		display: flex;
+		display        : flex;
+		justify-content: space-between;
+		align-items    : center;
+		width          : 100%;
+		height         : 75px;
+		padding        : 0px 40px;
+		margin-bottom  : 20px;
 
-		.channel-icon {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			padding: 10px;
-			width: 75px;
-			height: 75px;
-			background: #48bfe3;
-			border-radius: 66px;
+		.channel-name-icon-container {
+			display        : flex;
+			width          : 310px;
+			justify-content: flex-start;
+			align-items    : center;
 
-			span {
-				@extend .headline4;
-				color: $grey0 !important;
+			.channel-icon {
+				display        : flex;
+				justify-content: center;
+				align-items    : center;
+				padding        : 10px;
+				width          : 75px;
+				height         : 75px;
+				background     : #48bfe3;
+				border-radius  : 66px;
+
+				span {
+					@extend .headline4;
+					color: $grey0 !important;
+				}
 			}
-		}
-		.channel-name {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			padding: 15px 20px;
-			span {
-				@extend .headline6;
-			}
-			.span2 {
-				@extend .subtitle1;
-				color: $grey5;
+
+			.channel-name {
+
+				display       : flex;
+				flex-direction: column;
+				align-items   : flex-start;
+				margin-left   : 20px;
+
+				span {
+					@extend .headline6;
+				}
+
+				.span2 {
+					@extend .subtitle1;
+					color: $grey5;
+				}
 			}
 		}
 	}
+
+
 }
