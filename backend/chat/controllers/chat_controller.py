@@ -33,9 +33,11 @@ class ChatController:
         if self.__db.sismember(self.CHANNELS_SET, channel_details.name) == 0:
             try:
                 # creating a HASH for channel details
+                data_dict = channel_details.dict()
+                data_dict["owner"] = user_name
                 ret = self.__db.hset(
                     "{}{}".format(self.CHANNEL_HASH_PREFIX, channel_details.name),
-                    mapping=channel_details.dict(),
+                    mapping=data_dict,
                 )
 
                 if ret == 0:
@@ -92,15 +94,33 @@ class ChatController:
 
         try:
             _data = self.__db.sadd(
-                "{}:{}".format(user_name, self.CHANNELS_SET), channel_name
+                "{}:{}".format(user_name, self.CHANNELS_SET), channel_name.name
             )
         except:
             return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
 
-        if _data is not None:
+        if _data is None:
             return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
 
         return status.HTTP_201_CREATED, "you successfully joined the channel"
+
+    def get_my_channels(self, user_name):
+        """
+        Gets the names of the channels for a particular user
+        """
+
+        try:
+            _data = self.__db.smembers("{}:{}".format(user_name, self.CHANNELS_SET))
+        except:
+            return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
+
+        if _data is None:
+            return status.HTTP_404_NOT_FOUND, "no data against this"
+
+        _data = list(_data)
+        _data = [x.decode("utf-8") for x in _data]
+
+        return status.HTTP_200_OK, _data
 
     def add_user(self, _data):
         """

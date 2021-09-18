@@ -104,7 +104,8 @@ services:
     environment:
       CHAT_PORT: $CHAT_PORT
       REDIS_PORT: $REDIS_PORT
-      
+      AUTH_PORT: 4000
+
   notification:
     build: ./backend/notification
     container_name: notification
