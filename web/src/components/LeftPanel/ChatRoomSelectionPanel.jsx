@@ -8,7 +8,7 @@ import user4 from "../../assets/icons/profile/user4.png";
 import user5 from "../../assets/icons/profile/user5.png";
 import user6 from "../../assets/icons/profile/user6.png";
 
-export default function ChatRoomSelectionPanel() {
+export default function ChatRoomSelectionPanel(props) {
 
 	const [searchValue, setSearchValue] = useState("");
 
@@ -86,58 +86,60 @@ export default function ChatRoomSelectionPanel() {
 		);
 	};
 	return (
-		<div className="chat-room-selection-panel-container">
-			<div className="w-100 " style={{ padding: "0 30px" }}>
-				<div className="messages-header">
-					<span className="messages-header-text">Messages</span>
-					{messagesCounterNotification(6)}
-				</div>
-
-				<div className="search-container">
-					<Search placeholder="Search" onChange={(e) => { setSearchValue(e.target.value); }} value={searchValue} />
-				</div>
-			</div>
-
-			<div className="all-rooms-container hide-scroll">
-				<div className="channel-rooms-container">
-					<div className="rooms-container-header" >
-						<span className="rooms-container-header-text">CHANNELS</span>
-						<div className="addIcon">
-							<AddIcon className="pointer" />
-						</div>
+		<Fragment>
+			<div className="chat-room-selection-panel-container">
+				<div className="w-100 " style={{ padding: "0 30px" }}>
+					<div className="messages-header">
+						<span className="messages-header-text">Messages</span>
+						{messagesCounterNotification(6)}
 					</div>
 
-					{
-						channels.map((channel, index) => {
-							return (
-								<div key={index}>
-									{RoomSelectorBar(channel.image, channel.name, channel.notificationCount)}
-								</div>
-							);
-						})
-					}
-
-				</div>
-				<div className="DM-rooms-container">
-					<div className="rooms-container-header">
-						<span className="rooms-container-header-text">DIRECT MESSAGES</span>
-						<div className="addIcon pointer">
-							<AddIcon />
-						</div>
+					<div className="search-container">
+						<Search placeholder="Search" onChange={(e) => { setSearchValue(e.target.value); }} value={searchValue} />
 					</div>
-					{
-						DMs.map((channel, index) => {
-							return (
-								<div key={index}>
-									{RoomSelectorBar(channel.image, channel.name, channel.notificationCount)}
-								</div>
-							);
-						})
-					}
-
 				</div>
-			</div>
 
-		</div>
+				<div className="all-rooms-container hide-scroll">
+					<div className="channel-rooms-container">
+						<div className="rooms-container-header" >
+							<span className="rooms-container-header-text">CHANNELS</span>
+							<div className="addIcon" onClick={props.onChannelAdd}>
+								<AddIcon className="pointer" />
+							</div>
+						</div>
+
+						{
+							channels.map((channel, index) => {
+								return (
+									<div key={index}>
+										{RoomSelectorBar(channel.image, channel.name, channel.notificationCount)}
+									</div>
+								);
+							})
+						}
+
+					</div>
+					<div className="DM-rooms-container">
+						<div className="rooms-container-header">
+							<span className="rooms-container-header-text">DIRECT MESSAGES</span>
+							<div className="addIcon pointer" onClick={props.onDMAdd}>
+								<AddIcon />
+							</div>
+						</div>
+						{
+							DMs.map((channel, index) => {
+								return (
+									<div key={index}>
+										{RoomSelectorBar(channel.image, channel.name, channel.notificationCount)}
+									</div>
+								);
+							})
+						}
+
+					</div>
+				</div>
+
+			</div>
+		</Fragment>
 	);
 }
