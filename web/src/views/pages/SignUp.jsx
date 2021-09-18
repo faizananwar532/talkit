@@ -7,7 +7,7 @@ import { ReactComponent as Logo } from "../../assets/icons/logo/Logo.svg";
 import { ReactComponent as Arrow } from "../../assets/icons/arrows/shape.svg";
 import Googlelogo from "../../assets/icons/logo/Google Icon.svg";
 import FacebookLogo from "../../assets/icons/logo/Facebook Icon.svg";
-import { isEmailValid, isPasswordValid } from "./../../utils/Utilites";
+import { isEmailValid, isPasswordValid, setCookie } from "./../../utils/Utilites";
 import { authBaseUrl } from "./../../utils/BaseURL";
 
 
@@ -99,7 +99,10 @@ export default function SignIn() {
 			setSuccess("Signup successful");
 		}
 
+		setCookie("token", json.data.refresh_token, 7);
 		setProcessing(false);
+
+		window.location.reload();
 
 	};
 
