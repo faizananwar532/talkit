@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ template "relname" . }}-web
+  namespace: {{ .Values.namespace }}
+  annotations:
+    ingressClassName: "nginx"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/acme-challenge-type: dns01
+    cert-manager.io/acme-dns01-provider: cloudflare
+spec:
+  tls:
+  - hosts:
+    - {{ .Values.hostnames.web | quote }}
+    secretName: {{ template "relname" . }}-webapp-tls
+  rules:
+  - host: {{ .Values.hostnames.web | quote }}
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ include "relname" . }}-web
+            port:
+              number: 80
+
+          # serviceName: {{ include "relname" . }}-web
+          # servicePort: http-web

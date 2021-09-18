@@ -1,0 +1,12 @@
+apiVersion: v2
+name: talkit
+description: A Helm chart for talkit
+type: application
+version: 0.1.0
+appVersion: 1.16.0
+
+# dependencies:
+#     - name: ambassador
+#       version: 6.7.12
+#       repository: https://www.getambassador.io/
+#       condition: ambassador.install

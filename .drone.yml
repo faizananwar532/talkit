@@ -49,7 +49,7 @@ trigger:
   - main
   event:
   - pushxxx
-  - pull_requestxxx
+  - pull_request
 
 depends_on:
 - build
@@ -61,28 +61,18 @@ steps:
     environment:
       DRONE_SA:
         from_secret: st-drone
-      GOOGLE_APP_SA:
-        from_secret: st-gac
       POSTGRES_PASSWORD:
-        from_secret: st-postgresql-password
+        from_secret: postgresql-password
       ACCESS_TOKEN_SECRET_KEY: 
-        from_secret: st-access-token-key
+        from_secret: auth-access-token-key
       REFRESH_TOKEN_SECRET_KEY: 
-        from_secret: st-refresh-token-key
-      RESET_PASSWORD_TOKEN_SECRET_KEY: 
-        from_secret: st-reset-password-key
-      COOKIE_SECRETE_KEY: 
-        from_secret: st-cookie-key
+        from_secret: auth-refresh-token-key
       USER_ACTIVATION_TOKEN_SECRET_KEY:
-        from_secret: st-user-activation-key
+        from_secret: auth-user-activation-key
       GOOGLE_OAUTH_CLIENT_ID:
-        from_secret: st-google-oauth-client-id
+        from_secret: google-oauth-client-id
       GOOGLE_OAUTH_CLIENT_SECRET:
-        from_secret: st-google-oauth-client-secret
-      KAFKA_USERNAME:
-        from_secret: st-kafka-username
-      KAFKA_PASSWORD:
-        from_secret: st-kafka-password
+        from_secret: google-oauth-client-secret
       MG_API_KEY:
         from_secret: mg-private-key
     depends_on: [ clone ]
@@ -90,13 +80,11 @@ steps:
     - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh
     - echo $DRONE_SA | base64 -d > gcp-key.json
     - gcloud auth activate-service-account --key-file gcp-key.json
-    - gcloud config set core/project talkit-main
-    - gcloud container clusters get-credentials staging --zone us-central1-a --project talkit-main
+    - gcloud config set core/project talkit-prod
+    - gcloud container clusters get-credentials staging --zone us-central1-a --project talkit-prod
     - kubectl config use-context gke_altrunic-main_us-central1-a_staging
     - cd infra/main-chart
-    - helm repo add datawire https://www.getambassador.io
-    - helm dependency update
-    - helm upgrade --install staging . --namespace staging --set namespace="staging" --set tag="${DRONE_COMMIT:0:7}" --set autoscaling.enabled=false --set ambassador.autoscaling.enabled=false --set postgresql.postgresqlPassword="$POSTGRES_PASSWORD" --set google.sa_key="$GOOGLE_APP_SA" --set rudderstack.key="$RUDDERSTACK_WRITE_KEY" --set rudderstack.webWriteKey="$RUDDERSTACK_WEB_WRITE_KEY" --set intercom.key="$INTERCOM_KEY" --set intercom.appID="$INTERCOM_APP_ID" --set secrets.accessTokenKey="$ACCESS_TOKEN_SECRET_KEY" --set secrets.refreshTokenKey="$REFRESH_TOKEN_SECRET_KEY" --set secrets.resetPasswordKey="$RESET_PASSWORD_TOKEN_SECRET_KEY" --set secrets.cookieKey="$COOKIE_SECRETE_KEY" --set google.oauthClientID="$GOOGLE_OAUTH_CLIENT_ID" --set google.oauthClientSecret="$GOOGLE_OAUTH_CLIENT_SECRET" --set azure.oauthClientID="$AZURE_OAUTH_CLIENT_ID" --set azure.oauthClientSecret="$AZURE_OAUTH_CLIENT_SECRET" --set azure.oauthTenantID="$AZURE_OAUTH_TENANT_ID" --set kafka.userName="$KAFKA_USERNAME" --set kafka.password="$KAFKA_PASSWORD" --set mailgun.apiKey="$MG_API_KEY"  --set mongo.password="$MONGO_PASSWORD" --set mongo.host="$MONGO_HOST" --set stripe.secretKey="$STRIPE_SECRET_KEY" --set stripe.webhookSecret="$STRIPE_WEBHOOK_SECRET" --set stripe.destinationAccount="$STRIPE_DESTINATION_ACCOUNT" --set stripe.donationwebhook="$STRIPE_DONATION_WEBHOOK" --set stripe.subscriptionWebhookSecret="$STRIPE_SUBSCRIPTION_WEBHOOK" --set aws.accessKeyID="$AWS_ACCESS_KEY" --set aws.secretKeyID="$AWS_SECRET_KEY" --set secrets.userActivationTokenKey="$USER_ACTIVATION_TOKEN_SECRET_KEY" --set cloudflare.configEmail="$CLOUDFLARE_EMAIL" --set cloudflare.apiKey="$CLOUDFLARE_API_KEY" --set cloudflare.apiToken="$CLOUDFLARE_API_TOKEN" --set cloudflare.zoneId="$CLOUDFLARE_ZOND_ID"
+    - helm upgrade --install prod . --namespace prod --set namespace="prod" --set tag="${DRONE_COMMIT:0:7}" --set postgresql.postgresqlPassword="$POSTGRES_PASSWORD" --set google.sa_key="$DRONE_SA" --set secrets.accessTokenKey="$ACCESS_TOKEN_SECRET_KEY" --set secrets.refreshTokenKey="$REFRESH_TOKEN_SECRET_KEY" --set secrets.userActivationTokenKey="$USER_ACTIVATION_TOKEN_SECRET_KEY" --set google.oauthClientID="$GOOGLE_OAUTH_CLIENT_ID" --set google.oauthClientSecret="$GOOGLE_OAUTH_CLIENT_SECRET" --set mailgun.apiKey="$MG_API_KEY"
 
 ---
 kind: signature

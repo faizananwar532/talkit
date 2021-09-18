@@ -1,5 +1,6 @@
 
-**infra
+# **infra
+**script
 .helmignore
 *.lock
 *.tgz

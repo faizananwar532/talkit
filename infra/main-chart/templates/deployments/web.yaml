@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "relname" . }}-web
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "relname" . }}
+    component: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "relname" . }}
+      component: web
+  template:
+    metadata:
+      labels:
+        app: {{ template "relname" . }}
+        component: web
+    spec:
+      containers:
+      - name: {{ template "relname" . }}-web
+        image: {{ .Values.images.web }}:{{ .Values.tag }}
+        imagePullPolicy: {{ .Values.pullpolicy }}
+        ports:
+        - containerPort: {{ .Values.ports.web }}
+          name: http-web
+        env:
+        - name: REACT_APP_GW_URL
+          value: https://{{ .Values.hostnames.ambassador }}
+        livenessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 15
+          timeoutSeconds: 15
+        readinessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+      # nodeSelector:
+      #   cloud.google.com/gke-nodepool: default-pool
+---
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "relname" . }}-web-hpa
+  labels:
+    app: {{ template "relname" . }}
+    component: hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "relname" . }}-web
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+{{- end }}

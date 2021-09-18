@@ -1,0 +1,59 @@
+namespace: prod
+
+superuser_email: 
+
+images:
+  auth: gcr.io/talkit-prod/auth
+  web: gcr.io/talkit-prod/web
+  
+tag:
+
+pullpolicy: Always
+
+hostnames:
+  web: talkit.fun
+  ambassador: api.talkit.fun
+
+buckets:
+  content: profile-content
+
+google:
+  sa_key:
+  project: talkit-prod
+  oauthClientID:
+  oauthClientSecret:
+  oauthCallbackURL: https://api.talkit.fun/v1/oauth/google/callback
+ 
+secrets:
+  accessTokenKey:
+  encryptionSaltRounds: 10
+  newUserPassword: 1s28fnv9f
+  refreshTokenKey:
+  userActivationTokenKey:
+
+mailgun:
+  apiKey:
+  domain: mg.talkit.fun
+
+redis:
+  channel: user_created
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 70
+  
+postgresql:
+  connectionName: talkit-prod:us-central1:talkit-guard
+  port: 5432
+  postgresqlUsername: postgres
+  postgresqlPassword:
+
+databases:
+  auth: auth
+
+ports:
+  sternguard: 4000
+  web: 80

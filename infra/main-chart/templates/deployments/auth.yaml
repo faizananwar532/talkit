@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "relname" . }}-auth
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "relname" . }}
+    component: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "relname" . }}
+      component: auth
+  template:
+    metadata:
+      labels:
+        app: {{ template "relname" . }}
+        component: auth
+    spec:
+      containers:
+      - name: {{ template "relname" . }}-auth
+        image: {{ .Values.images.auth }}:{{ .Values.tag }}
+        imagePullPolicy: {{ .Values.pullpolicy }}
+        command:
+        - sh
+        - -c
+        - "yarn start"
+        ports:
+        - containerPort: {{ .Values.ports.auth }}
+          name: http-sg
+        env:
+        - name: POSTGRES_USERNAME
+          value: {{ .Values.postgresql.postgresqlUsername }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.postgresql.postgresqlPassword | quote }}
+        - name: POSTGRES_HOST
+          value: {{ template "relname" . }}-csproxy:{{ .Values.postgresql.port }}
+        - name: POSTGRES_DATABASE
+          value: {{ .Values.databases.auth }}
+        - name: USER_CREATED_CHANNEL
+          value: {{ .Values.redis.channel }}
+        - name: ACCESS_TOKEN_SECRET_KEY
+          value: {{ .Values.secrets.accessTokenKey }}
+        - name: REFRESH_TOKEN_SECRET_KEY
+          value: {{ .Values.secrets.refreshTokenKey }}
+        - name: USER_ACTIVATION_TOKEN_SECRET_KEY
+          value: {{ .Values.secrets.userActivationTokenKey }}
+        - name: FRONTEND_URL
+          value: https://{{ .Values.hostnames.web }}
+        - name: talkit_WEB_ORIGIN
+          value: https://{{ .Values.hostnames.web }}
+        - name: GOOGLE_OAUTH_CLIENT_ID
+          value: {{ .Values.google.oauthClientID }}
+        - name: GOOGLE_OAUTH_CLIENT_SECRET
+          value: {{ .Values.google.oauthClientSecret }}
+        - name: GOOGLE_OAUTH_CALLBACK_URL
+          value: {{ .Values.google.oauthCallbackURL }}
+        livenessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 15
+          timeoutSeconds: 15
+        readinessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+        # livenessProbe:
+        #   httpGet:
+        #     path: /live
+        #     port: {{ .Values.ports.auth }}
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 60
+        # readinessProbe:
+        #   httpGet:
+        #     path: /ready
+        #     port: {{ .Values.ports.auth }}
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 60
+      # nodeSelector:
+      #   cloud.google.com/gke-nodepool: default-pool
+      volumes:
+      - name: secrets
+        secret:
+          secretName: {{ template "relname" . }}-shared-vol
+---
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "relname" . }}-auth-hpa
+  labels:
+    app: {{ template "relname" . }}
+    component: hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "relname" . }}-auth
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+{{- end }}

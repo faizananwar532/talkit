@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "relname" . }}-auth-migration
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "relname" . }}
+    component: auth
+  annotations:
+    "helm.sh/hook": post-upgrade,post-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-weight": "1"
+spec:
+  backoffLimit: 5
+  template:
+    metadata:
+      name: {{ template "relname" . }}-auth-migration
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: {{ template "relname" . }}-auth-migration
+        image: {{ .Values.images.auth }}:{{ .Values.tag }}
+        imagePullPolicy: {{ .Values.pullpolicy }}
+        command:
+        - sh
+        - -c
+        - "yarn migrate && yarn seed"
+        env:
+        - name: POSTGRES_USERNAME
+          value: {{ .Values.postgresql.postgresqlUsername }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.postgresql.postgresqlPassword | quote }}
+        - name: POSTGRES_HOST
+          value: {{ template "relname" . }}-csproxy:{{ .Values.postgresql.port }}
+        - name: POSTGRES_DATABASE
+          value: {{ .Values.databases.auth }}
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
+      volumes:
+      - name: secrets
+        secret:
+          secretName: {{ template "relname" . }}-shared-vol
