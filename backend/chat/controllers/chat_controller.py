@@ -20,6 +20,8 @@ class ChatController:
 
     CHAT_CHANNEL_PARTICIPANTS = "channel:{}:participants"
 
+    CHAT_MESSAGE_PREFIX = "message:"
+
     def __init__(self, _db):
         self.__db = _db  # for storing the redis db object
 
@@ -49,6 +51,18 @@ class ChatController:
                     )
 
                 # adding channel to channels SET
+                ret = self.__db.sadd(
+                    "{}".format(self.CHANNELS_SET),
+                    channel_details.name,
+                )
+
+                if ret == 0:
+                    return (
+                        status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        "something went wrong adding SET for channel",
+                    )
+
+                # adding channel to user's channels SET
                 ret = self.__db.sadd(
                     "{}{}".format(user_name, self.USER_CHANNELS_POSTFIX),
                     channel_details.name,
@@ -97,7 +111,7 @@ class ChatController:
         try:
             # adding channel association with user
             _data = self.__db.sadd(
-                "{}:{}".format(user_name, self.CHANNELS_SET), channel_name.name
+                "{}{}".format(user_name, self.USER_CHANNELS_POSTFIX), channel_name.name
             )
 
             # adding user to the channel
@@ -116,7 +130,9 @@ class ChatController:
         """
 
         try:
-            _data = self.__db.smembers("{}:{}".format(user_name, self.CHANNELS_SET))
+            _data = self.__db.smembers(
+                "{}{}".format(user_name, self.USER_CHANNELS_POSTFIX)
+            )
         except:
             return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
 
@@ -128,14 +144,23 @@ class ChatController:
 
         return status.HTTP_200_OK, _data
 
-    def send_to_channel(self, channel, message):
-    """
-    This function adds the message to the appropriate channel
-    """
+    def send_to_channel(self, channel_name, message):
+        """
+        This function adds the message to the appropriate channel
+        """
 
-    try:
-        
+        try:
+            id = self.__db.xadd(channel_name, {"type": "message"})
+            logging.error(id)
+            id = id.decode("utf-8")
+            ret = self.__db.hset(
+                "{}{}".format(self.CHAT_MESSAGE_PREFIX, id), mapping=message
+            )
+            logging.error(ret)
+        except:
+            return False
 
+        return True
 
     def add_user(self, _data):
         """

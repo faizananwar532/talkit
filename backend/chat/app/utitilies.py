@@ -9,9 +9,9 @@ def verification_details(token):
 
     _r = requests.post(url, headers=headers)
     res_status = _r.status_code
-    _data = _r.json()
-
     if res_status != 200:
         return res_status, None
+
+    _data = _r.json()
 
     return res_status, _data

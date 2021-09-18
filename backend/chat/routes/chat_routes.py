@@ -30,7 +30,7 @@ html = """
         <script>
             var client_id = Date.now()
             document.querySelector("#ws-id").textContent = client_id;
-            var ws = new WebSocket(`ws://localhost:3060/ws/${client_id}`);
+            var ws = new WebSocket(`ws://localhost:3060/ws/testing/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzIwMDY5MDUsInVzZXIiOnsidXNlcl9pZCI6MzQsInVzZXJuYW1lIjoiYXdhaXMiLCJlbWFpbCI6ImF3YWlzQGdhbWFpbC5jb20ifSwiaWF0IjoxNjMyMDAzMzA1fQ.zbVllIg9FunGCfaVZisuCKCAL4v744R7L5GIa2IRyNY`);
             ws.onmessage = function(event) {
                 var messages = document.getElementById('messages')
                 var message = document.createElement('li')

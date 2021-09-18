@@ -2,11 +2,12 @@
 Author: Ammar Saqib
 """
 import json
+import logging
 from typing import List
-
-from fastapi import FastAPI, Header, WebSocket, WebSocketDisconnect
+from app.database import get_db
+from fastapi import FastAPI, Header, WebSocket, WebSocketDisconnect, Depends
 from routes import channel_routes, chat_routes
-
+from controllers.chat_controller import ChatController
 from app.utitilies import verification_details
 
 app = FastAPI()
@@ -36,13 +37,20 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
-@app.websocket("/ws/{channel_name}/{user_id}")
+@app.websocket("/ws/{channel_name}/{token}")
 async def websocket_endpoint(
-    websocket: WebSocket, user_id: int, Authorization: Header(None), channel_name: str
+    websocket: WebSocket,
+    channel_name: str,
+    token: str,
+    _db=Depends(get_db),
 ):
-    stat, auth_data = verification_details(Authorization)
+    """
+    Web socket for chat stuff
+    """
+    stat, auth_data = verification_details("bearer " + token)
+    logging.error(auth_data)
 
-    if stat is not 200:
+    if stat != 200:
         return
 
     auth_data = auth_data["data"]["user"]
@@ -51,15 +59,19 @@ async def websocket_endpoint(
     try:
         while True:
             data = await websocket.receive_text()  # a json is expected
+            logging.error(data)
+            logging.error(type(data))
 
             # construct appropriate message body
             data = json.loads(data)
             data.update(auth_data)
+            logging.error(data)
 
             # add message to stream
+            _ = ChatController(_db).send_to_channel(channel_name, data)
 
             # send the received message
-            await manager.send_personal_message(data, websocket)
+            await manager.send_personal_message(json.dumps(data), websocket)
             # await manager.broadcast(f"Client #{user_id} says: {data}")
 
     except WebSocketDisconnect:
