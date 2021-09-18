@@ -1,4 +1,4 @@
-FROM node:13.12.0-alpine as build-stage
+FROM node:10-alpine as build-stage
 
 ARG REACT_APP_COMMIT_SHA
 ENV REACT_APP_COMMIT_SHA=$REACT_APP_COMMIT_SHA
