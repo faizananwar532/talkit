@@ -6,6 +6,7 @@ import React from "react";
 // import AppComponent from "../components/AppComponent";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import ChatPanelContainer from "./Chat/ChatPanelContainer";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
 				<Switch>
 					<Route exact path="/" component={SignIn} />
 					<Route exact path="/signup" component={SignUp} />
+					<Route exact path="/" component={ChatPanelContainer} />
 				</Switch>
 			</Router>
 		</div>
