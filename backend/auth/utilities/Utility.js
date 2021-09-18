@@ -21,6 +21,13 @@ const isPasswordValid = function (password) {
 	return validationRegex.test(password);
 };
 
+const isUsernameValid = function (username) {
+
+	const validationRegex = /(^[A-Za-z0-9_]{3,})+$/g;
+	return validationRegex.test(username);
+
+};
+
 /**
  * 
  * @param {string} text plain text that has to be encrypted
@@ -63,4 +70,5 @@ module.exports = {
 	isHashValid,
 	getStandardString,
 	isPasswordValid,
+	isUsernameValid
 };

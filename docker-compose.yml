@@ -68,7 +68,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ./redisdata:/data
+      - ./backend/redisdata:/data
     entrypoint:
       redis-server
         --loadmodule /usr/lib/redis/modules/redisearch.so
@@ -91,3 +91,20 @@ services:
     environment: 
       PORT: 5000
       USER_CREATED_CHANNEL: $USER_CREATED_CHANNEL
+      MAILGUN_API_KEY: $MAILGUN_API_KEY
+      MAILGUN_DOMAIN_NAME: $MAILGUN_DOMAIN_NAME
+
+  # redis:
+  #   container_name: redis
+  #   hostname: redis
+  #   image: redis
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+    - REDIS_HOSTS=local:redischatapp:6379
+    ports:
+    - "8081:8081"

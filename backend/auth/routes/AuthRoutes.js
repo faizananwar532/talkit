@@ -4,13 +4,14 @@ const authController = require('./../controllers/AuthController');
 
 router.post('/verify', authenticateToken, async (req, res, next) => {
 
+	req.response = { result: { status: 200, data: { success: true } } };
 	next();
 
 });
 
 router.post('/signup', async (req, res, next) => {
 
-	req.response = await authController.register(req.body);
+	req.response = await authController.register(req.body, req.headers.origin);
 
 	next();
 
