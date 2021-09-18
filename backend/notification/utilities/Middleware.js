@@ -1,6 +1,3 @@
-const { validateToken } = require('./Authentication');
-const KeyMaster = require('./KeyMaster');
-
 //Allow Cross-origin resource sharing
 exports.crossOriginResource = async function (req, res, next) {
 
@@ -13,7 +10,7 @@ exports.crossOriginResource = async function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
 	// Request headers you wish to allow	
-	res.setHeader('Access-Control-Allow-Headers', '*');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, sentry-trace, content-type, authorization, accept');
 
 	// Set to true if you need the website to include cookies in the requests sent
 	// to the API (e.g. in case you use sessions)
@@ -21,32 +18,9 @@ exports.crossOriginResource = async function (req, res, next) {
 
 	// Pass to next layer of middleware
 	if (req.method === 'OPTIONS') {
-		res.sendStatus(KeyMaster.API_CODES.SUCCESS);
+		res.sendStatus(200);
 	} else {
 		next();
-	}
-
-};
-
-exports.authenticateToken = function (req, res, next) {
-
-	console.log('Requested');
-
-	const authorizationHeader = req.headers['authorization'];
-
-	const accessToken = authorizationHeader && authorizationHeader.split(' ')[1];
-
-	if (!accessToken) {
-		return res.sendStatus(KeyMaster.API_CODES.FORBIDDEN);
-	}
-
-	try {
-		const tokenData = validateToken(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY);
-		req.user = tokenData.user;
-		next();
-
-	} catch (err) {
-		res.sendStatus(KeyMaster.API_CODES.UNAUTHORIZED);
 	}
 
 };

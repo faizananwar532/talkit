@@ -1,6 +1,6 @@
-const { isEmailValid, getHash, isHashValid, isPasswordValid } = require('./../utilities/Utility');
+const { isEmailValid, getHash, isHashValid, isPasswordValid, isUsernameValid } = require('./../utilities/Utility');
 const exceptionHandler = require('../utilities/Exceptions');
-const { generateAccessToken, generateRefreshToken, validateToken } = require('../utilities/Authentication');
+const { generateAccessToken, generateRefreshToken, validateToken, generateActivationToken } = require('../utilities/Authentication');
 const User = require('../models/User');
 const KeyMaster = require('../utilities/KeyMaster');
 const { publicOnRedisChannel } = require('../utilities/RedisStream');
@@ -11,7 +11,11 @@ const { publicOnRedisChannel } = require('../utilities/RedisStream');
  * @param {string} {password} Account password
  * @example register(email, password, firstName, lastName )
  */
-const register = async function ({ username, email, password }) {
+const register = async function ({ username, email, password }, origin) {
+
+	if (!username || !isUsernameValid(username)) {
+		return { error: { status: KeyMaster.API_CODES.BAD_REQUEST, message: 'Username should not contain spaces or special character except "_"' } };
+	}
 
 	if (!email || !isEmailValid(email.toLowerCase())) {
 		return { error: { status: KeyMaster.API_CODES.BAD_REQUEST, message: 'Invalid Email Address' } };
@@ -29,12 +33,12 @@ const register = async function ({ username, email, password }) {
 		const user = await User.query().insert({ username, email: email.toLowerCase(), password: hashPassword, is_active: true });
 
 		// Create activation link for the user
-		// const activationToken = generateActivationToken(data.user.email);
-		// const activationLink = `${origin}/activation/${activationToken}`;
+		const activationToken = generateActivationToken(user.email);
+		const activationLink = `${origin}/activation/${activationToken}`;
 
 		delete user['password'];
 
-		publicOnRedisChannel(process.env.USER_CREATED_CHANNEL, { data: user });
+		publicOnRedisChannel(process.env.USER_CREATED_CHANNEL, { data: user, activation_link: activationLink });
 
 		const { access_token, expiration_timestamp } = generateAccessToken(user);
 		const refreshToken = generateRefreshToken(user);
@@ -120,7 +124,7 @@ const refreshToken = async function ({ refresh_token }) {
 
 		const tokenData = validateToken(refresh_token, process.env.REFRESH_TOKEN_SECRET_KEY);
 
-		await User.query().findOne({ email: tokenData.user.email }).throwIfNotFound();
+		await User.query().findOne({ username: tokenData.user.username }).throwIfNotFound();
 
 		const { access_token, expiration_timestamp } = generateAccessToken(tokenData.user);
 
