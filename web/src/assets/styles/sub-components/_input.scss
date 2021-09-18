@@ -14,4 +14,10 @@
 		resize: none;
 		outline: none;
 	}
+	.input-label {
+		padding-bottom: 5px;
+		span {
+			@extend .body1;
+		}
+	}
 }

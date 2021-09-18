@@ -17,8 +17,8 @@ export default function SignIn(){
 
 	return(
 		<div className="signin-container">
-			<div>
-				<span className="headline4">Sign In</span>
+			<div className="header">
+				<span>Sign In</span>
 			</div>
 			<div>
 				<Input

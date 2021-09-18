@@ -4,8 +4,8 @@ export default function Input(props) {
 	return (
         
 		<div className="input-container" style={props.style}>
-			<div style={{ paddingBottom: "5px" }}>
-				<span className='p2'>{props.label || "Label"}</span>
+			<div className="input-label">
+				<span>{props.label || "Label"}</span>
 				{props.asterik && <span style={{ color: "red" }}> *</span>}
 			</div>
 			<div className="w-100">

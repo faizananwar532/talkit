@@ -9,4 +9,13 @@
 	background-color: $primaryLight;
 	display: flex;
 	flex-direction: column;
+	.header {
+		span {
+			@extend .headline4;
+		}
+	}
+
+	span {
+		@extend .body1;
+	}
 }
