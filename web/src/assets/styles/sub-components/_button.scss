@@ -1,4 +1,5 @@
 @import "../style-assets/colors";
+@import "../style-assets/typography";
 
 .button-primary {
 	background-color: $primaryColor;
@@ -12,14 +13,25 @@
 }
 
 .button-secondary {
-	background-color: $iconColor1;
+	background-color: $grey0;
 	padding: 10px 30px;
-	text-align: center;
 	cursor: pointer;
-	display: inline-block;
-	border: none;
-	border-radius: 10px;
-	font-family: Poppins;
+	border: 1px solid $grey6;
+	border-radius: 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	img {
+		width: 40px;
+		height: 40px;
+	}
+	.button-text {
+		span {
+			@extend .headline1;
+			color: $grey8 !important;
+		}
+	}
 }
 
 .processing::after {

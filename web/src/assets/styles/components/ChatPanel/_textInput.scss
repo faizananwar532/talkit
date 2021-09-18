@@ -1,0 +1,43 @@
+.input-bottom-bar {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+
+	img {
+		width: 17px;
+		height: 17px;
+	}
+
+	.send-image-container {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background-color: $primaryLight;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+
+		img {
+			width: 20px;
+			height: 20px;
+		}
+	}
+	.input-text-field {
+		width: 90%;
+		height: 50px;
+		border-radius: 89px;
+		padding: 13px 35px;
+		border: 1px solid $grey5;
+		display: flex;
+		justify-content: space-between;
+
+		.input-text {
+			border: none;
+			outline: none;
+			width: 80%;
+			@extend .body1;
+			color: $grey5 !important;
+		}
+	}
+}

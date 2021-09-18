@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Button from "../../subComponents/Button";
-import Input from "../../subComponents/Input";
-import { authBaseUrl } from "../../utils/BaseURL";
-import { isEmailValid, isPasswordValid } from "../../utils/Utilites";
+import { isEmailValid, isPasswordValid } from "../../../../backend/auth/utilities/Utility";
+import Button from "../../sub-components/Button";
+import Input from "../../sub-components/Input";
+import {authBaseUrl} from "./../../utils/BaseURL";
 
-export default function SignUp() {
+export default function SignUp(){
 
 	const [user, setUser] = useState({
 		first_name: "",
@@ -95,7 +95,7 @@ export default function SignUp() {
 
 	};
 
-	return (
+	return(
 		<div className="signup-container">
 			<div>
 				<span className="headline4">Sign Up</span>
