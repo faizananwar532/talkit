@@ -1,0 +1,28 @@
+.channel-details {
+    width           : 100%;
+    height          : calc(100% - 198px);
+    position        : relative;
+    background-color: $grey1;
+    border-radius   : 25px 25px 0px 0px;
+
+    .channel-icon {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        align-items    : center;
+        padding        : 10px;
+        position       : absolute;
+        width          : 100px;
+        height         : 100px;
+        background     : #48BFE3;
+        border-radius  : 66px;
+
+        top : -50px;
+        left: 170px;
+
+        span {
+            @extend .headline4;
+            color: $grey0 !important;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+.chat-main-panel-container {
+
+    .left-panel {
+        width           : 520px;
+        height          : 100%;
+        padding         : 25px;
+        display         : flex;
+        background-color: $grey1;
+        display         : flex;
+        justify-content : space-between;
+    }
+}

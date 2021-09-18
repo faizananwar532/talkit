@@ -1,0 +1,113 @@
+@import "../../style-assets/typography";
+
+.chat-main-panel-container .left-panel .chat-room-selection-panel-container {
+    width  : 325px;
+    height : 100%;
+    padding: 63px 0px 25px 0px;
+
+    .messages-header {
+        display        : flex;
+        justify-content: space-between;
+        align-items    : center;
+
+        .messages-header-text {
+            @extend .headline5;
+            font-weight: 600 !important;
+            color      : $grey9 !important;
+
+        }
+    }
+
+    .chat-notification-counter {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        align-items    : center;
+        padding        : 10px;
+        width          : 30px;
+        height         : 30px;
+        background     : $primaryLight;
+        border-radius  : 57px;
+        flex           : none;
+        order          : 1;
+        flex-grow      : 0;
+
+        span {
+            @extend .body1;
+            color: $grey0 !important;
+        }
+    }
+
+    .search-container {
+        width        : 100%;
+        padding-right: 15px;
+        margin-top   : 30px;
+    }
+
+    .all-rooms-container {
+
+        height    : calc(100% - 135px);
+        width     : 100%;
+        margin-top: 25px;
+        overflow  : scroll;
+        overflow-x: hidden;
+
+        .channel-rooms-container,
+        .DM-rooms-container {
+            width         : 100%;
+            height        : max-content;
+            margin        : 25px 0px;
+            display       : flex;
+            flex-direction: column;
+            align-items   : flex-start;
+
+            .rooms-container-header-text {
+                @extend .body1;
+                color: $grey6;
+            }
+
+            .room-selector-bar {
+                width          : 100%;
+                height         : max-content;
+                display        : flex;
+                justify-content: space-between;
+                align-items    : center;
+                margin-top     : 25px;
+
+                .bar-image-name-container {
+                    width          : 290px;
+                    display        : flex;
+                    justify-content: flex-start;
+                    align-items    : center;
+
+                    img {
+                        width        : 60px;
+                        height       : 60px;
+                        border-radius: 66px;
+                    }
+
+                    .image-alt {
+                        width          : 60px;
+                        height         : 60px;
+                        border-radius  : 66px;
+                        display        : flex;
+                        justify-content: center;
+                        align-items    : center;
+
+                        span {
+                            @extend .headline6;
+                            color: $grey0 !important;
+                        }
+                    }
+
+                    .name {
+                        @extend .subtitle1;
+                        color      : $grey9 !important;
+                        font-weight: 500 !important;
+                        margin-left: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
