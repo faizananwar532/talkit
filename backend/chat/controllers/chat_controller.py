@@ -1,8 +1,9 @@
 """
 Author: Ammar Saqib
 """
-
+import logging
 from fastapi import status
+import json
 
 
 class ChatController:
@@ -18,7 +19,7 @@ class ChatController:
         Creates a tenant in the system
 
         Status Codes:
-        201 : tenant created
+        201 : tenant created_data
         200 : already exists
         """
         if self.__db.sismember("tenants", tenant_id) == 0:
@@ -41,4 +42,18 @@ class ChatController:
         }
         """
 
-        self.__db.hset("user:{}".format)
+        _data = json.loads(_data)["data"]
+        logging.error(_data)
+        user_name = _data["username"]
+        _data["online"] = True
+
+        del _data["username"]
+
+        try:
+            self.__db.hset("user:{}".format(user_name), mapping=_data)
+            self.__db.sadd("usernames", user_name)
+        except Exception as e:
+            logging.error(e)
+            return False
+
+        return True

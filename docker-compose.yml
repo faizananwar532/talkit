@@ -63,7 +63,7 @@ services:
     ports:
       - $REDIS_PORT:$REDIS_PORT
     volumes:
-      - ./redisdata:/data
+      - ./backend/redisdata:/data
     entrypoint:
       redis-server
         --loadmodule /usr/lib/redis/modules/redisearch.so
