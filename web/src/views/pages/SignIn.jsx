@@ -74,8 +74,8 @@ export default function SignIn() {
 			setError(json.message);
 		} else {
 			setSuccess("Authentication successful");
+			setCookie("token", json.data.refresh_token, 7);
 		}
-		setCookie("token", json.data.refresh_token, 7);
 		setProcessing(false);
 
 		window.location.reload();
