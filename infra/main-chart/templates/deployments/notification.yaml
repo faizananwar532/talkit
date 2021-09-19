@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "relname" . }}-notification
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "relname" . }}
+    component: notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "relname" . }}
+      component: notification
+  template:
+    metadata:
+      labels:
+        app: {{ template "relname" . }}
+        component: notification
+    spec:
+      containers:
+      - name: {{ template "relname" . }}-notification
+        image: {{ .Values.images.notification }}:{{ .Values.tag }}
+        imagePullPolicy: {{ .Values.pullpolicy }}
+        command:
+        - sh
+        - -c
+        - "yarn start"
+        ports:
+        - containerPort: {{ .Values.ports.notification }}
+          name: http-notif
+        env:
+        - name: PORT
+          value: "5000"
+        - name: USER_CREATED_CHANNEL
+          value: {{ .Values.redis.userCreatedChannel }}
+        - name: USER_INVITATION_CHANNEL
+          value: {{ .Values.redis.userInitationChannel }}
+        - name: MAILGUN_DOMAIN_NAME
+          value: {{ .Values.mailgun.domain }}
+        - name: MAILGUN_API_KEY
+          value: {{ .Values.mailgun.apiKey }}
+        - name: REDIS_SERVER
+          value: {{ .Values.redis.server }}
+        - name: REDIS_PASSWORD
+          value: {{ .Values.redis.password }}
+        - name: REDIS_PORT
+          value: "10121"
+        - name: PORT
+          value: "4000"
+        livenessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 15
+          timeoutSeconds: 15
+        readinessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+        # livenessProbe:
+        #   httpGet:
+        #     path: /live
+        #     port: {{ .Values.ports.notification }}
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 60
+        # readinessProbe:
+        #   httpGet:
+        #     path: /ready
+        #     port: {{ .Values.ports.notification }}
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 60
+      # nodeSelector:
+      #   cloud.google.com/gke-nodepool: default-pool
+      volumes:
+      - name: secrets
+        secret:
+          secretName: {{ template "relname" . }}-shared-vol
+---
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "relname" . }}-notification-hpa
+  labels:
+    app: {{ template "relname" . }}
+    component: hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "relname" . }}-notification
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+{{- end }}

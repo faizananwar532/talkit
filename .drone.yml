@@ -39,6 +39,20 @@ steps:
     - cd backend/chat
     - gcloud builds submit --config=cloudbuild.yaml --substitutions=_COMMIT_SHA=${DRONE_COMMIT:0:7}
   
+  - name: build-notification
+    pull: if-not-exists
+    image: google/cloud-sdk:latest
+    environment:
+      DRONE_SA:
+        from_secret: st-drone
+    depends_on: [ clone ]
+    commands:
+    - echo $DRONE_SA | base64 -d > gcp-key.json
+    - gcloud auth activate-service-account --key-file gcp-key.json
+    - gcloud config set core/project talkit-prod
+    - cd backend/notification
+    - gcloud builds submit --config=cloudbuild.yaml --substitutions=_COMMIT_SHA=${DRONE_COMMIT:0:7}
+  
   - name: build-web
     pull: if-not-exists
     image: google/cloud-sdk:latest

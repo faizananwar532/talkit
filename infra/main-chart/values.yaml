@@ -5,6 +5,7 @@ superuser_email:
 images:
   auth: gcr.io/talkit-prod/auth
   chat: gcr.io/talkit-prod/chat
+  notification: gcr.io/talkit-prod/notification
   web: gcr.io/talkit-prod/web
   
 tag:
@@ -30,7 +31,7 @@ secrets:
   encryptionSaltRounds: 10
   newUserPassword: 1s28fnv9f
   refreshTokenKey:
-  userActivationTokenKey:
+  userActivationTokenKey: 
 
 mailgun:
   apiKey:
@@ -61,5 +62,6 @@ databases:
 ports:
   auth: 4000
   chat: 3060
+  notification: 5000
   redis: 10121
   web: 80
