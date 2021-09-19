@@ -142,7 +142,9 @@ class ChatController:
         _data = list(_data)
         _data = [x.decode("utf-8") for x in _data]
 
+        logging.error(_data)
         for channel in _data:
+            logging.error("inside for")
             ret = self.__db.hgetall("{}{}".format(self.CHANNEL_HASH_PREFIX, channel))
             logging.error(ret)
 
