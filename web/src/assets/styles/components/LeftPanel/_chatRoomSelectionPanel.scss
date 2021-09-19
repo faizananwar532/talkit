@@ -63,7 +63,7 @@
 
             .rooms-container-header {
                 width          : 100%;
-                padding        : 0 25px;
+                padding        : 0px 25px 15px 25px;
                 display        : flex;
                 justify-content: space-between;
                 align-items    : center;
@@ -93,14 +93,27 @@
                 }
             }
 
+            .selected {
+                background: linear-gradient(90deg, rgba(217, 43, 33, 0.25) 0%, rgba(217, 43, 33, 0.05) 100%);
+            }
+
+            .unselected {
+
+                &:hover {
+                    background: $grey2;
+                }
+            }
+
             .room-selector-bar {
                 width          : 100%;
                 height         : max-content;
                 display        : flex;
                 justify-content: space-between;
                 align-items    : center;
-                margin-top     : 25px;
-                padding        : 0px 30px;
+                margin-top     : 0px;
+                padding        : 12px 30px;
+
+
 
                 .bar-image-name-container {
                     width          : 290px;

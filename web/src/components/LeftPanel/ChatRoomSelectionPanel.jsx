@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import Search from "../../sub-components/Search";
 import { ReactComponent as AddIcon } from "../../assets/icons/basic/add.svg";
 // import user1 from "../../assets/icons/profile/user1.png";
@@ -11,9 +11,12 @@ import { openURL } from "../../utils/Utilites";
 import { chatBaseUrl } from "../../utils/BaseURL";
 import { useAuthentication } from "../../context/Authentication";
 import { useHistory } from "react-router";
+import { ChatContext } from "../../context/ChatContext";
+import ImageIcon from "../../sub-components/common/ImageIcon";
 
 export default function ChatRoomSelectionPanel(props) {
 
+	const { chatContactsData, setChatContactsData } = useContext(ChatContext);
 	const auth = useAuthentication();
 
 	const history = useHistory();
@@ -21,7 +24,8 @@ export default function ChatRoomSelectionPanel(props) {
 	const [searchValue, setSearchValue] = useState("");
 	const [channels, setChannels] = useState([]);
 
-	const randomColors = ["#7AE582", "#48BFE3"];
+
+	// const randomColors = ["#7AE582", "#48BFE3"];
 	// const channels = [
 	// 	{
 	// 		image: null,
@@ -67,6 +71,17 @@ export default function ChatRoomSelectionPanel(props) {
 		// }
 	];
 
+	useEffect(() => {
+		setChatContactsData({
+			...chatContactsData,
+			selectedContact: channels[0]
+		});
+	}, []);
+
+	useEffect(() => {
+		console.log(chatContactsData);
+	}, [chatContactsData]);
+
 
 
 	const messagesCounterNotification = (count) => {
@@ -82,19 +97,11 @@ export default function ChatRoomSelectionPanel(props) {
 		);
 	};
 
-	const RoomSelectorBar = (image, name) => {
+	const RoomSelectorBar = (image, name, count, color, selected) => {
 		return (
-			<div className="room-selector-bar pointer" onClick={() => history.push(`/${name}`)}>
+			<div className={`room-selector-bar pointer ${selected ? "selected" : "unselected"}`} onClick={() => history.push(`/${name}`)}>
 				<div className="bar-image-name-container">
-					{
-						image ? (
-							<img src={image} />
-						) : (
-							<div className="image-alt" style={{ background: `${randomColors[Math.floor(Math.random() * 2)]}` }}>
-								<span>{name.substring(0,2)}</span>
-							</div>
-						)
-					}
+					<ImageIcon type="md" name={name} image={image} color={color} />
 					<span className="name">{name}</span>
 				</div>
 				{/* {messagesCounterNotification(count)} */}
@@ -146,8 +153,14 @@ export default function ChatRoomSelectionPanel(props) {
 						{
 							channels.map((channel, index) => {
 								return (
-									<div key={index}>
-										{RoomSelectorBar(channel.image, channel.name, channel.notificationCount)}
+									<div className="w-100 d-flex align-items-center" key={index} onClick={() => {
+										setChatContactsData({
+											...chatContactsData,
+											selectedContact: channel
+										});
+									}} >
+										{RoomSelectorBar(channel.image, channel.name, channel.notificationCount, channel.color,
+											(channel.id === chatContactsData?.selectedContact?.id && chatContactsData?.selectedContact?.type === "channel-room") ? true : false)}
 									</div>
 								);
 							})
@@ -164,8 +177,14 @@ export default function ChatRoomSelectionPanel(props) {
 						{
 							DMs.map((channel, index) => {
 								return (
-									<div key={index}>
-										{RoomSelectorBar(channel.image, channel.name, channel.notificationCount)}
+									<div key={index} className="w-100 d-flex align-items-center" onClick={() => {
+										setChatContactsData({
+											...chatContactsData,
+											selectedContact: channel
+										});
+									}}>
+										{RoomSelectorBar(channel.image, channel.name, channel.notificationCount,
+											(channel.id === chatContactsData?.selectedContact?.id && chatContactsData?.selectedContact?.type === "dm-room") ? true : false)}
 									</div>
 								);
 							})

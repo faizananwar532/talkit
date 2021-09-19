@@ -17,10 +17,11 @@ export default function LeftPanel() {
 			<SideNavbar />
 			<ChatRoomSelectionPanel
 				onChannelAdd={() => { setAddChannelModalsStatus({ ...addChannelModalsStatus, isAddChannelModalOpen: true }); }}
-				onDMAdd={() => { }} />
+				onDMAdd={() => { setAddChannelModalsStatus({ ...addChannelModalsStatus, isAddDmModalOpen: true }); }} />
 
 			<JoinRoomModal
 				isAddChannelModalOpen={addChannelModalsStatus.isAddChannelModalOpen}
+				isAddDmModalOpen={addChannelModalsStatus.isAddDmModalOpen}
 				onClose={() => { setAddChannelModalsStatus({ isAddChannelModalOpen: false, isAddDmModalOpen: false }); }}
 				onConfirm={(isConfirmed) => { }} />
 

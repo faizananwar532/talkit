@@ -29,7 +29,12 @@
 
         span {
             @extend .headline5;
-            color: $grey9 !important;
+            color      : $grey9 !important;
+            font-weight: 500 !important;
+        }
+
+        path {
+            stroke: $grey9;
         }
     }
 
@@ -38,12 +43,13 @@
         display        : flex;
         align-items    : center;
         justify-content: flex-end;
-        padding        : 20px 40px 35px 40px;
+        padding        : 20px 40px 0px 40px;
     }
 
     .modal-selected-tab {
         width        : max-content;
         border-bottom: 3px solid $primaryColor;
+        margin-bottom: -2px;
 
         span {
             @extend .headline6;
