@@ -90,7 +90,8 @@ async def websocket_endpoint(
             _ = ChatController(_db).send_to_channel(channel_name, data)
 
             # send the received message
-            await manager.send_personal_message(json.dumps(data), websocket)
+            # await manager.send_personal_message(json.dumps(data), websocket)
+            await manager.broadcast(json.dumps(data), websocket)
             # await manager.broadcast(f"Client #{user_id} says: {data}")
 
     except WebSocketDisconnect:
