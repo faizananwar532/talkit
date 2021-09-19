@@ -100,7 +100,7 @@ steps:
     - gcloud container clusters get-credentials prod --zone us-central1-a --project talkit-prod
     - kubectl config use-context gke_talkit-prod_us-central1-a_prod
     - cd infra/main-chart
-    - helm upgrade --install prod . --namespace prod --set namespace="prod" --set tag="7e01549" --set postgresql.postgresqlPassword="$POSTGRES_PASSWORD" --set google.sa_key="$DRONE_SA" --set secrets.accessTokenKey="$ACCESS_TOKEN_SECRET_KEY" --set secrets.refreshTokenKey="$REFRESH_TOKEN_SECRET_KEY" --set secrets.userActivationTokenKey="$USER_ACTIVATION_TOKEN_SECRET_KEY" --set google.oauthClientID="$GOOGLE_OAUTH_CLIENT_ID" --set google.oauthClientSecret="$GOOGLE_OAUTH_CLIENT_SECRET" --set mailgun.apiKey="$MG_API_KEY" --set redis.password="$REDIS_PASSWORD"
+    - helm upgrade --install prod . --namespace prod --set namespace="prod" --set tag="${DRONE_COMMIT:0:7}" --set postgresql.postgresqlPassword="$POSTGRES_PASSWORD" --set google.sa_key="$DRONE_SA" --set secrets.accessTokenKey="$ACCESS_TOKEN_SECRET_KEY" --set secrets.refreshTokenKey="$REFRESH_TOKEN_SECRET_KEY" --set secrets.userActivationTokenKey="$USER_ACTIVATION_TOKEN_SECRET_KEY" --set google.oauthClientID="$GOOGLE_OAUTH_CLIENT_ID" --set google.oauthClientSecret="$GOOGLE_OAUTH_CLIENT_SECRET" --set mailgun.apiKey="$MG_API_KEY" --set redis.password="$REDIS_PASSWORD"
 
 ---
 kind: signature
