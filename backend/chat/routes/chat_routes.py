@@ -8,7 +8,7 @@ from app.database import get_db
 from app.schemas import ChannelName
 from app.utitilies import verification_details
 from controllers.chat_controller import ChatController
-from fastapi import APIRouter, Depends, Header, Response, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, Header, Response
 from fastapi.responses import HTMLResponse
 
 router = APIRouter(prefix="/v1/chat", tags=["Chat"])

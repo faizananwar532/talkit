@@ -2,15 +2,15 @@ import React from "react";
 
 export default function ImageIcon(props) {
 	const getNameShortForm = (name) => {
-
-		if (name) {
+		var tempName = name[0].toUpperCase() + name.slice(1);
+		if (tempName) {
 
 			let string = "";
-			var sL = name.length;
+			var sL = tempName.length;
 			var i = 0;
 			for (; i < sL; i++) {
-				if (name.charAt(i) === name.charAt(i).toUpperCase()) {
-					string += name.charAt(i);
+				if (tempName.charAt(i) === tempName.charAt(i).toUpperCase()) {
+					string += tempName.charAt(i);
 				}
 			}
 

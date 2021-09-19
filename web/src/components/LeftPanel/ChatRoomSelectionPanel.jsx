@@ -1,96 +1,74 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
-import { ChatContext } from "../../context/ChatContext";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import Search from "../../sub-components/Search";
 import { ReactComponent as AddIcon } from "../../assets/icons/basic/add.svg";
-import user1 from "../../assets/icons/profile/user1.png";
-import user2 from "../../assets/icons/profile/user2.png";
-import user3 from "../../assets/icons/profile/user3.png";
-import user4 from "../../assets/icons/profile/user4.png";
-import user5 from "../../assets/icons/profile/user5.png";
-import user6 from "../../assets/icons/profile/user6.png";
+// import user1 from "../../assets/icons/profile/user1.png";
+// import user2 from "../../assets/icons/profile/user2.png";
+// import user3 from "../../assets/icons/profile/user3.png";
+// import user4 from "../../assets/icons/profile/user4.png";
+// import user5 from "../../assets/icons/profile/user5.png";
+// import user6 from "../../assets/icons/profile/user6.png";
+import { openURL } from "../../utils/Utilites";
+import { chatBaseUrl } from "../../utils/BaseURL";
+import { useAuthentication } from "../../context/Authentication";
+import { useHistory } from "react-router";
+import { ChatContext } from "../../context/ChatContext";
 import ImageIcon from "../../sub-components/common/ImageIcon";
 
 export default function ChatRoomSelectionPanel(props) {
 
 	const { chatContactsData, setChatContactsData } = useContext(ChatContext);
+	const auth = useAuthentication();
+
+	const history = useHistory();
+
 	const [searchValue, setSearchValue] = useState("");
+	const [channels, setChannels] = useState([]);
+
 
 	// const randomColors = ["#7AE582", "#48BFE3"];
-	const channels = [
-		{
-			id: 1,
-			image: null,
-			name: "HackFest’21",
-			notificationCount: 2,
-			chat: [],
-			type: "channel-room",
-			color: "#7AE582"
-		},
-		{
-			id: 2,
-			image: null,
-			name: "VenturenoxTeam",
-			notificationCount: 0,
-			chat: [],
-			type: "channel-room",
-			color: "#48BFE3"
-		}
-	];
+	// const channels = [
+	// 	{
+	// 		image: null,
+	// 		name: "HackFest’21",
+	// 		notificationCount: 2
+	// 	},
+	// 	{
+	// 		image: null,
+	// 		name: "VenturenoxTeam",
+	// 		notificationCount: 0
+	// 	}
+	// ];
 	const DMs = [
-		{
-			id: 1,
-			image: user1,
-			name: "Ammar",
-			notificationCount: 1,
-			chat: [],
-			type: "dm-room",
-			color: "#7AE582"
-		},
-		{
-			id: 2,
-			image: user2,
-			name: "Sharjeel",
-			notificationCount: 0,
-			chat: [],
-			type: "dm-room",
-			color: "#48BFE3"
-		},
-		{
-			id: 3,
-			image: user3,
-			name: "Faizan",
-			notificationCount: 0,
-			chat: [],
-			type: "dm-room",
-			color: "#7AE582"
-		},
-		{
-			id: 4,
-			image: user4,
-			name: "Zain",
-			notificationCount: 0,
-			chat: [],
-			type: "dm-room",
-			color: "#48BFE3"
-		},
-		{
-			id: 5,
-			image: user5,
-			name: "Hamza",
-			notificationCount: 3,
-			chat: [],
-			type: "dm-room",
-			color: "#7AE582"
-		},
-		{
-			id: 6,
-			image: user6,
-			name: "Bilqees",
-			notificationCount: 0,
-			chat: [],
-			type: "dm-room",
-			color: "#48BFE3"
-		}
+		// {
+		// 	image: user1,
+		// 	name: "Ammar",
+		// 	notificationCount: 1
+		// },
+		// {
+		// 	image: user2,
+		// 	name: "Sharjeel",
+		// 	notificationCount: 0
+		// },
+		// {
+		// 	image: user3,
+		// 	name: "Faizan",
+		// 	notificationCount: 0
+		// },
+		// {
+		// 	image: user4,
+		// 	name: "Zain",
+		// 	notificationCount: 0
+		// },
+		// {
+		// 	image: user5,
+		// 	name: "Hamza",
+		// 	notificationCount: 3
+		// },
+		// {
+		// 	image: user6,
+		// 	name: "Bilqees",
+		// 	notificationCount: 0
+		// }
 	];
 
 	useEffect(() => {
@@ -103,6 +81,7 @@ export default function ChatRoomSelectionPanel(props) {
 	useEffect(() => {
 		console.log(chatContactsData);
 	}, [chatContactsData]);
+
 
 
 	const messagesCounterNotification = (count) => {
@@ -120,15 +99,34 @@ export default function ChatRoomSelectionPanel(props) {
 
 	const RoomSelectorBar = (image, name, count, color, selected) => {
 		return (
-			<div className={`room-selector-bar pointer ${selected ? "selected" : "unselected"}`}>
+			<div className={`room-selector-bar pointer ${selected ? "selected" : "unselected"}`} onClick={() => history.push(`/${name}`)}>
 				<div className="bar-image-name-container">
 					<ImageIcon type="md" name={name} image={image} color={color} />
 					<span className="name">{name}</span>
 				</div>
-				{messagesCounterNotification(count)}
+				{/* {messagesCounterNotification(count)} */}
 			</div>
 		);
 	};
+
+	const getUserChannels = async () => {
+
+		const { result } = await openURL(chatBaseUrl, "/v1/channels/my", "GET", auth);
+
+		if (result) {
+			setChannels(result.data);
+		}
+
+	};
+
+	useEffect(async () => {
+
+		getUserChannels();
+
+	}, []);
+
+
+
 	return (
 		<Fragment>
 			<div className="chat-room-selection-panel-container">

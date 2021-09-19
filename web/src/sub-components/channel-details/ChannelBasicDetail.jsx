@@ -8,6 +8,7 @@ import Input from "../Input";
 export default function ChannelBasicDetail(props) {
 
 	const [modal, setModal] = useState(false);
+	const [reportModal, setReportModal] = useState(false);
 
 	const [ModalStatus, setModalStatus] = useState({
 		isDeleteModalOpen: false,
@@ -19,6 +20,10 @@ export default function ChannelBasicDetail(props) {
 
 	const handleClick = () => {
 		setModal(!modal);
+	};
+
+	const reportClick = () => {
+		setReportModal(true);
 	};
 	return (
 

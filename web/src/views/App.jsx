@@ -18,7 +18,12 @@ function App() {
 					<Switch>
 						<Route exact path="/signin" component={SignIn} />
 						<Route exact path="/signup" component={SignUp} />
-						<Route exact path="/" component={ChatPanelContainer} />
+						<Route exact path="/">
+							<ChatPanelContainer />
+						</Route>
+						<Route exact path="/:channel_name">
+							<ChatPanelContainer />
+						</Route>
 					</Switch>
 				</AuthProvider>
 			</Router>
