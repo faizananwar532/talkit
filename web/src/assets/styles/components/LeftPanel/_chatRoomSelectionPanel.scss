@@ -1,141 +1,153 @@
 @import "../../style-assets/typography";
 
 .chat-main-panel-container .left-panel .chat-room-selection-panel-container {
-    width  : 100%;
-    height : 100%;
-    padding: 63px 0px 25px 0px;
+	width: 100%;
+	height: 100%;
+	padding: 63px 0px 25px 0px;
 
-    .messages-header {
-        display        : flex;
-        justify-content: space-between;
-        align-items    : center;
+	.messages-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
-        .messages-header-text {
-            @extend .headline5;
-            font-weight: 600 !important;
-            color      : $grey9 !important;
+		.messages-header-text {
+			@extend .headline5;
+			font-weight: 600 !important;
+			color: $grey9 !important;
+		}
+	}
 
-        }
-    }
+	.chat-notification-counter {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		width: 30px;
+		height: 30px;
+		background: $primaryLight;
+		border-radius: 57px;
+		flex: none;
+		order: 1;
+		flex-grow: 0;
 
-    .chat-notification-counter {
-        display        : flex;
-        flex-direction : column;
-        justify-content: center;
-        align-items    : center;
-        padding        : 10px;
-        width          : 30px;
-        height         : 30px;
-        background     : $primaryLight;
-        border-radius  : 57px;
-        flex           : none;
-        order          : 1;
-        flex-grow      : 0;
+		span {
+			@extend .body1;
+			color: $grey0 !important;
+		}
+	}
 
-        span {
-            @extend .body1;
-            color: $grey0 !important;
-        }
-    }
+	.search-container {
+		width: 100%;
+		padding-right: 15px;
+		margin-top: 30px;
+	}
 
-    .search-container {
-        width        : 100%;
-        padding-right: 15px;
-        margin-top   : 30px;
-    }
+	.all-rooms-container {
+		height: calc(100% - 135px);
+		width: 98%;
+		margin-top: 25px;
+		overflow: scroll;
+		overflow-x: hidden;
 
-    .all-rooms-container {
+		.channel-rooms-container,
+		.DM-rooms-container {
+			width: 100%;
+			height: max-content;
+			margin: 25px 0px;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
 
-        height    : calc(100% - 135px);
-        width     : 98%;
-        margin-top: 25px;
-        overflow  : scroll;
-        overflow-x: hidden;
+			.rooms-container-header {
+				width: 100%;
+				padding: 0px 25px 15px 25px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 
-        .channel-rooms-container,
-        .DM-rooms-container {
-            width         : 100%;
-            height        : max-content;
-            margin        : 25px 0px;
-            display       : flex;
-            flex-direction: column;
-            align-items   : flex-start;
+				.rooms-container-header-text {
+					@extend .body1;
+					color: $grey6 !important;
+				}
 
-            .rooms-container-header {
-                width          : 100%;
-                padding        : 0 25px;
-                display        : flex;
-                justify-content: space-between;
-                align-items    : center;
+				.addIcon {
+					width: 25px;
+					height: 25px;
+					border-radius: 50%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
 
-                .rooms-container-header-text {
-                    @extend .body1;
-                    color: $grey6;
-                }
+					&:hover {
+						width: 25px;
+						height: 25px;
+						background-color: $grey2;
+						border-radius: 50%;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+				}
+			}
 
-                .addIcon {
-                    width          : 25px;
-                    height         : 25px;
-                    border-radius  : 50%;
-                    display        : flex;
-                    justify-content: center;
-                    align-items    : center;
+			.selected {
+				background: linear-gradient(
+					90deg,
+					rgba(217, 43, 33, 0.25) 0%,
+					rgba(217, 43, 33, 0.05) 100%
+				);
+			}
 
-                    &:hover {
-                        width           : 25px;
-                        height          : 25px;
-                        background-color: $grey2;
-                        border-radius   : 50%;
-                        display         : flex;
-                        justify-content : center;
-                        align-items     : center;
-                    }
-                }
-            }
+			.unselected {
+				&:hover {
+					background: $grey2;
+				}
+			}
 
-            .room-selector-bar {
-                width          : 100%;
-                height         : max-content;
-                display        : flex;
-                justify-content: space-between;
-                align-items    : center;
-                margin-top     : 25px;
-                padding        : 0px 30px;
+			.room-selector-bar {
+				width: 100%;
+				height: max-content;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 0px;
+				padding: 12px 30px;
 
-                .bar-image-name-container {
-                    width          : 290px;
-                    display        : flex;
-                    justify-content: flex-start;
-                    align-items    : center;
+				.bar-image-name-container {
+					width: 290px;
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
 
-                    img {
-                        width        : 60px;
-                        height       : 60px;
-                        border-radius: 66px;
-                    }
+					img {
+						width: 60px;
+						height: 60px;
+						border-radius: 66px;
+					}
 
-                    .image-alt {
-                        width          : 60px;
-                        height         : 60px;
-                        border-radius  : 66px;
-                        display        : flex;
-                        justify-content: center;
-                        align-items    : center;
+					.image-alt {
+						width: 60px;
+						height: 60px;
+						border-radius: 66px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
 
-                        span {
-                            @extend .headline6;
-                            color: $grey0 !important;
-                        }
-                    }
+						span {
+							@extend .headline6;
+							color: $grey0 !important;
+						}
+					}
 
-                    .name {
-                        @extend .subtitle1;
-                        color      : $grey9 !important;
-                        font-weight: 500 !important;
-                        margin-left: 20px;
-                    }
-                }
-            }
-        }
-    }
+					.name {
+						@extend .subtitle1;
+						color: $grey9 !important;
+						font-weight: 500 !important;
+						margin-left: 20px;
+					}
+				}
+			}
+		}
+	}
 }

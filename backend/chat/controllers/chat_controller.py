@@ -142,11 +142,14 @@ class ChatController:
         _data = list(_data)
         _data = [x.decode("utf-8") for x in _data]
 
+        ret_data = []
+
         for channel in _data:
             ret = self.__db.hgetall("{}{}".format(self.CHANNEL_HASH_PREFIX, channel))
-            logging.error(ret)
+            ret = {y.decode("utf-8"): ret.get(y).decode("utf-8") for y in ret.keys()}
+            ret_data.append(ret)
 
-        return status.HTTP_200_OK, _data
+        return status.HTTP_200_OK, ret_data
 
     def send_to_channel(self, channel_name, message):
         """
@@ -182,6 +185,26 @@ class ChatController:
                 return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
 
         return status.HTTP_200_OK, "users added"
+
+    def get_all_convo(self, channel_name):
+        """
+        Fetches all of the conversations from a channel
+        """
+
+        try:
+            data = self.__db.xrange("{}".format(channel_name))
+
+        except:
+            return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
+
+        ret_data = []
+        for id in data:
+            decoded_id = id[0].decode("utf-8")
+            ret = self.__db.hgetall("{}{}".format(self.CHAT_MESSAGE_PREFIX, decoded_id))
+            ret = {y.decode("utf-8"): ret.get(y).decode("utf-8") for y in ret.keys()}
+            ret_data.append(ret)
+
+        return status.HTTP_200_OK, ret_data
 
     def add_user(self, _data):
         """
