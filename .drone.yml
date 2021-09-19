@@ -8,7 +8,7 @@ trigger:
   - main
   event:
   - push
-  - pull_requestx
+  - pull_request
 
 steps:
   - name: build-auth
@@ -65,8 +65,8 @@ trigger:
   - pushxxx
   - pull_request
 
-# depends_on:
-# - build
+depends_on:
+- build
 
 steps:
   - name: deploy_talkit
