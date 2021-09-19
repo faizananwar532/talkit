@@ -10,10 +10,10 @@ export default function ChatPanel() {
 				<div>
 					<InputTextBox/>
 				</div>
-				<div>
-					<MessageBox sender/>
+				<div className="pb-4">
+					<MessageBox sender />
 					<div className="receiver-message-box">
-						<MessageBox receiver/>
+						<MessageBox receiver />
 					</div>
 				</div>
 			</div>

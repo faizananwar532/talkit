@@ -6,12 +6,17 @@ import SubMenuModal from "../SubMenuModal";
 export default function ChannelBasicDetail(props) {
 
 	const [modal, setModal] = useState(false);
+	const [reportModal, setReportModal] = useState(false);
 
 	useEffect(() => {
 	}, [props.selectedContact]);
 
 	const handleClick = () => {
 		setModal(!modal);
+	};
+
+	const reportClick = () => {
+		setReportModal(true);
 	};
 	return (
 
@@ -29,11 +34,11 @@ export default function ChannelBasicDetail(props) {
 				{
 					modal && 
 				<SubMenuModal>
-					<div>
-						<span>{props.selectedContact?.type === "channel-room" ? "Delete Channel": "Delete Chat"}</span>
+					<div onClick={props.delete}>
+						<span className="span2 pointer">{props.selectedContact?.type === "channel-room" ? "Delete Channel": "Delete Chat"}</span>
 					</div>
-					<div className="mt-1">
-						<span className="span2">{props.selectedContact?.type === "channel-room" ? "Report Channel": "Report Chat"}</span>
+					<div className="mt-1" onClick={reportClick}>
+						<span className=" pointer">{props.selectedContact?.type === "channel-room" ? "Report Channel": "Report User"}</span>
 					</div>
 				</SubMenuModal>
 				}

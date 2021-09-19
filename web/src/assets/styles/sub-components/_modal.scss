@@ -81,10 +81,10 @@
 	z-index: 10;
 	span {
 		@extend .subtitle2;
-		color: $primaryColor !important;
+		color: $grey9 !important;
 	}
 	.span2 {
 		@extend .subtitle2;
-		color: $grey9 !important;
+		color: $primaryColor !important;
 	}
 }
