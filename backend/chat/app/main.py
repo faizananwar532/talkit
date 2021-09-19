@@ -14,8 +14,6 @@ from app.database import get_db
 from app.utitilies import verification_details
 
 app = FastAPI()
-app.include_router(channel_routes.router)
-app.include_router(chat_routes.router)
 
 # origins = [
 #     "http://localhost.tiangolo.com",
@@ -31,6 +29,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(channel_routes.router)
+app.include_router(chat_routes.router)
 
 
 class ConnectionManager:
