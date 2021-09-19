@@ -142,6 +142,10 @@ class ChatController:
         _data = list(_data)
         _data = [x.decode("utf-8") for x in _data]
 
+        for channel in _data:
+            ret = self.__db.hgetall("{}{}".format(self.CHANNEL_HASH_PREFIX, channel))
+            logging.error(ret)
+
         return status.HTTP_200_OK, _data
 
     def send_to_channel(self, channel_name, message):
@@ -161,6 +165,23 @@ class ChatController:
             return False
 
         return True
+
+    def add_users(self, channel_name, user_lists):
+        """
+        Parses the list of users and adds their entries in the correct keys
+
+        1- add user to the channel participants
+        2- add channel to user's channel
+        """
+
+        user_list = user_lists.users.split(",")
+
+        for user in user_list:
+            res_status, _data = self.join_channel(user, channel_name)
+            if res_status != 201:
+                return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
+
+        return status.HTTP_200_OK, "users added"
 
     def add_user(self, _data):
         """
