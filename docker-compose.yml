@@ -66,6 +66,7 @@ services:
       USER_ACTIVATION_TOKEN_SECRET_KEY: $USER_ACTIVATION_TOKEN_SECRET_KEY
       REDIS_PORT: $REDIS_PORT
       REDIS_SERVER: $REDIS_SERVER
+      REDIS_PASSWORD: $REDIS_PASSWORD
 
   redis:
     container_name: redischatapp
@@ -128,6 +129,7 @@ services:
       MAILGUN_DOMAIN_NAME: $MAILGUN_DOMAIN_NAME
       REDIS_PORT: $REDIS_PORT
       REDIS_SERVER: $REDIS_SERVER
+      REDIS_PASSWORD: $REDIS_PASSWORD
 
   # redis:
   #   container_name: redis
