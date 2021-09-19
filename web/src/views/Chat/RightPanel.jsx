@@ -87,11 +87,12 @@ export default function RightPanel(props) {
 								<img src={props.userImage} />
 							) : (
 								<div className="userimage-alt" style={{ background: `${randomColors[Math.floor(Math.random() * 2)]}` }}>
-									<span>{`${auth.user.first_name[0]}${auth.user.last_name[0]}`}</span>
+									{/* <span>JH</span> */}
+									<span>{`${auth.user.username[0]}`}</span>
 								</div>
 							)
 						}
-						<span className="userName">{`${auth.user.first_name} ${auth.user.last_name}`}</span>
+						<span className="userName">{`${auth.user.username}`}</span>
 					</div>
 					
 					<DownArrow className="pointer mb-1" style={{width:"20px", height:"20px"}}/>

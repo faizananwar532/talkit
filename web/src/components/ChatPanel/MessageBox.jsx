@@ -22,7 +22,7 @@ export default function MessageBox(props) {
 			<div className="sender-message-box-container">
 				<div>
 					<img
-						src={props.image ||  user1}
+						src={props.image || user1}
 						alt=""
 					/>
 				</div>
@@ -53,7 +53,7 @@ export default function MessageBox(props) {
 			</div>
 		);
 	}
-	else if(props.receiver){
+	else if (props.receiver) {
 		return (
 			<div className="receiver-message-box-container">
 				<div onClick={onReceiverClick} style={{position:"relative", cursor:"pointer"}}>
@@ -82,14 +82,14 @@ export default function MessageBox(props) {
 				</div>
 				<div>
 					<img
-						src={props.image ||  user1}
+						src={props.image || user1}
 						alt=""
 					/>
 				</div>
-				
+
 			</div>
 		);
-		
+
 	}
-	
+
 }
