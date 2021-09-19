@@ -129,6 +129,7 @@ export default function JoinRoomModal(props) {
 			console.log(error);
 		} else {
 			console.log(result);
+			window.location.reload();
 		}
 
 	};

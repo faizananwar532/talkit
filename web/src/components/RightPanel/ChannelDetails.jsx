@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../sub-components/Button";
+// import Button from "../../sub-components/Button";
 import ChannelAttachments from "../../sub-components/channel-details/ChannelAttachments";
 import ChannelBasicDetail from "../../sub-components/channel-details/ChannelBasicDetail";
 import ChannelMedia from "../../sub-components/channel-details/ChannelMedia";
@@ -67,16 +67,27 @@ export default function ChannelDetails(props) {
 
 	return (
 		<div className="channel-details-container">
-			<ChannelBasicDetail selectedContact={props.selectedContact} />
-			<div className="channel-chat-items-container">
-				{
-					props.selectedContact?.type === "channel-room" &&
-					<ChannelMembers selectedContact={props.selectedContact} onInviteUser={() => { setInviteModalstatus({ ...inviteModalstatus, isMembersModalOpen: true }); }} />
-				}
+			{
+				props.selectedContact
+					?
+					<>
+						<ChannelBasicDetail selectedContact={props.selectedContact} />
+						<div className="channel-chat-items-container">
+							{
+								props.selectedContact?.type === "channel-room" &&
+								<ChannelMembers selectedContact={props.selectedContact} onInviteUser={() => { setInviteModalstatus({ ...inviteModalstatus, isMembersModalOpen: true }); }} />
+							}
 
-				<ChannelMedia />
-				<ChannelAttachments />
-			</div>
+							<ChannelMedia />
+							<ChannelAttachments />
+						</div>
+					</>
+					:
+					<div className="h-100 w-100 d-flex align-items-center justify-content-center">
+						<span className="headline6 grey4">No Chat Selected</span>
+					</div>
+			}
+
 
 			{
 				inviteModalstatus.isMembersModalOpen &&
