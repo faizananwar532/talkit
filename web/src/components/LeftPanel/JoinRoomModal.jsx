@@ -32,13 +32,12 @@ export default function JoinRoomModal(props) {
 	});
 
 	const onAddChannel = () => {
-		console.log("hey");
 		setAddChannelModalsStatus({ ...addChannelModalsStatus, isAddChannelModalOpen: false });
 		setConfirmationModal({ isOpen: true, templateId: 1 });
 	};
 
-	const onDMAdd = () => {
-		setConfirmationModal({ isOpen: true, templateId: 2 });
+	const onAddDm = () => {
+		setAddChannelModalsStatus({ ...addChannelModalsStatus, isAddDmModalOpen: false });
 	};
 
 	useEffect(() => {
@@ -46,7 +45,7 @@ export default function JoinRoomModal(props) {
 			isAddChannelModalOpen: props.isAddChannelModalOpen,
 			isAddDmModalOpen: props.isAddDmModalOpen
 		});
-	}, [props.isAddChannelModalOpen]);
+	}, [props.isAddChannelModalOpen, props.isAddDmModalOpen]);
 
 	const createRoomComp = () => {
 		return (
@@ -127,42 +126,14 @@ export default function JoinRoomModal(props) {
 			{
 				addChannelModalsStatus.isAddDmModalOpen &&
 				<Modal
-					title={"Channels"}
-					confirmBtnTitle={selectedOptionId === 1 ? "Create Channel" : false}
-					onConfirm={() => { onAddChannel(); }}
+					title={"New Direct Message"}
+					confirmBtnTitle={"Send Message"}
+					onConfirm={() => { onAddDm(); }}
 					onClose={props.onClose}>
 					<div style={{ padding: "0px 40px", textAlign: "left" }}>
-						<span className="body1 grey7">Channels are where your team communicates.They’re best when organized around a topic</span>
+						<Input type="plain" placeholder="e.g: @zahab or zahab@venturenox.com" label="To" />
 					</div>
 
-					<div style={{ borderBottom: "1px solid #E9ECEF", marginTop: "30px" }}>
-						<div className="d-flex" style={{ padding: "0px 40px" }}>
-							{
-								options.map((option, index) => {
-									return (
-										<div key={index}
-											onClick={() => { setSelectedOptionId(option.id); }}
-											className={`${selectedOptionId === option.id ? "modal-selected-tab" : "modal-unselected-tab"} pointer`} style={{ marginLeft: `${index !== 0 && "40px"}` }}>
-											<span>
-												{option.option}
-											</span>
-										</div>
-									);
-								})
-							}
-						</div>
-					</div>
-					{
-						selectedOptionId === 1
-							?
-							<>
-								{createRoomComp()}
-							</>
-							:
-							<>
-								{joinRoomComp()}
-							</>
-					}
 				</Modal >
 			}
 			{
@@ -175,17 +146,13 @@ export default function JoinRoomModal(props) {
 					}}>
 					{
 						confirmationModal.templateId === 1
-							?
-							<div
-								className="d-flex flex-column justify-content-between"
-								style={{ textAlign: "center", height: "60px" }}>
-								<span className="headline6 grey9">Channel Created!</span>
-								<span className="subtitle2 grey9"><font className="primaryColor">General</font> channel has been successfully created.</span>
-							</div>
-							:
-							<div style={{ textAlign: "center" }}>
-								<span className="headline6 grey9">{ }</span>
-							</div>
+						&&
+						<div
+							className="d-flex flex-column justify-content-between"
+							style={{ textAlign: "center", height: "60px" }}>
+							<span className="headline6 grey9">Channel Created!</span>
+							<span className="subtitle2 grey9"><font className="primaryColor">General</font> channel has been successfully created.</span>
+						</div>
 					}
 
 

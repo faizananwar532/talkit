@@ -1,35 +1,58 @@
 import React from "react";
 
 export default function ImageIcon(props) {
+	const getNameShortForm = (name) => {
+
+		if (name) {
+
+			let string = "";
+			var sL = name.length;
+			var i = 0;
+			for (; i < sL; i++) {
+				if (name.charAt(i) === name.charAt(i).toUpperCase()) {
+					string += name.charAt(i);
+				}
+			}
+
+			return string.substring(0, 2);
+		}
+	};
+
 	if (props.type === "lg") {
 		return (
-			<div className="profile-icon" style={props.style}>
+			<div className="profile-icon " style={{ height: "75px", width: "75px", border: "none", backgroundColor: `${props.color}`, ...props.style }}>
 				{
 					props.image
 						?
 						<img src={props.image} />
 						:
-						<span>MZ</span>
+						<span className="headline4 grey0 " style={{ fontWeight: "500" }}>{props.name ? getNameShortForm(props.name) : "MZ"}</span>
 				}
 			</div>
 		);
 	}
 	else if (props.type === "md") {
 		return (
-			<div className="profile-icon" style={props.style}>
-
-			</div>
-		);
-	}
-	else if (props.type === "sm") {
-		return (
-			<div className="profile-icon" style={props.style}>
+			<div className="profile-icon" style={{ height: "60px", width: "60px", border: "none", backgroundColor: `${props.color}`, ...props.style }}>
 				{
 					props.image
 						?
 						<img src={props.image} />
 						:
-						<span className="span-text">MZ</span>
+						<span className="span-text">{props.name ? getNameShortForm(props.name) : "MZ"}</span>
+				}
+			</div>
+		);
+	}
+	else if (props.type === "sm") {
+		return (
+			<div className="profile-icon" style={{ backgroundColor: `${props.color}`, ...props.style }}>
+				{
+					props.image
+						?
+						<img src={props.image} />
+						:
+						<span className="span-text">{props.name ? getNameShortForm(props.name) : "MZ"}</span>
 				}
 			</div>
 		);

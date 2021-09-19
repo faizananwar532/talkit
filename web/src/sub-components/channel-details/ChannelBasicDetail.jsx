@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import ImageIcon from "../common/ImageIcon";
 import SubMenuBtn from "../SubMenuBtn";
 
 export default function ChannelBasicDetail(props) {
+
+	useEffect(() => {
+	}, [props.selectedContact]);
+
 	return (
+
 		<div className="channel-details">
 			<div className="channel-name-icon-container">
-				<div className="channel-icon">
-					<span>VX</span>
-				</div>
+				<ImageIcon type="lg" image={null} name={props?.selectedContact?.name} color={props?.selectedContact?.color} />
 
 				<div className="channel-name">
-					<span>{props.channelName || "VenturenoxTeam"}</span>
+					<span>{props?.selectedContact?.name || "VenturenoxTeam"}</span>
 					<span className="span2">{props.status || "Active"}</span>
 				</div>
 			</div>
