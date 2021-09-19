@@ -28,7 +28,7 @@ export default function Modal(props) {
 				{
 					props.confirmBtnTitle &&
 					<div className="modal-btn-container">
-						<Button primary label={props.confirmBtnTitle} style={{ color: "white" }} onClick={props.onConfirm} />
+						<Button primary label={props.confirmBtnTitle} style={{ color: "white" }} onClick={props.onConfirm} processing={props.processing} />
 					</div>
 				}
 

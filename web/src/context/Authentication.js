@@ -56,7 +56,16 @@ export default function AuthProvider({ children }) {
 
 			const json = await response.json();
 
-			setAuth({ ...auth, access_token: json.data.access_token, token_expires_at: json.data.expiration_timestamp });
+			setAuth({ 
+				...auth, 
+				access_token: json.data.access_token, 
+				token_expires_at: json.data.expiration_timestamp, 
+				user: {
+					id: json.data.user_id,
+					username: json.data.username,
+					email: json.data.email
+				} 
+			});
 
 			if (window.location.pathname.includes("/signup") || window.location.pathname.includes("/signin")) {
 				history.push("/");
