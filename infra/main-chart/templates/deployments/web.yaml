@@ -30,6 +30,8 @@ spec:
           value: https://{{ .Values.hostnames.api }}
         - name: CHAT_BASE_URL
           value: https://{{ .Values.hostnames.api }}
+        - name: WEB_SOCKET_URL
+          value: ws://{{ .Values.hostnames.api }}
         livenessProbe:
           exec:
             command:

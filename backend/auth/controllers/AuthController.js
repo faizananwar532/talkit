@@ -48,6 +48,8 @@ const register = async function ({ username, email, password }, origin) {
 				status: KeyMaster.API_CODES.CREATED,
 				data: {
 					user_id: user.id,
+					username: user.username,
+					email: user.email,
 					access_token: access_token,
 					expiration_timestamp: expiration_timestamp,
 					refresh_token: refreshToken,
@@ -88,6 +90,8 @@ const login = async function ({ email, password }) {
 				status: KeyMaster.API_CODES.SUCCESS,
 				data: {
 					user_id: user.id,
+					username: user.username,
+					email: user.email,
 					access_token: access_token,
 					refresh_token: refreshToken,
 					expiration_timestamp: expiration_timestamp,
@@ -130,7 +134,9 @@ const refreshToken = async function ({ refresh_token }) {
 			result: {
 				status: KeyMaster.API_CODES.SUCCESS,
 				data: {
-					user_id: tokenData.user.id,
+					user_id: user.id,
+					username: user.username,
+					email: user.email,
 					access_token: access_token,
 					expiration_timestamp: expiration_timestamp,
 				}
