@@ -13,7 +13,7 @@ pullpolicy: Always
 
 hostnames:
   web: talkit.fun
-  ambassador: api.talkit.fun
+  api: api.talkit.fun
 
 buckets:
   content: profile-content
