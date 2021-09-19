@@ -1,5 +1,5 @@
 const redis = require('redis');
-const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_SERVER);
+const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_SERVER, { password: process.env.REDIS_PASSWORD });
 
 const createNotification = async () => {
 

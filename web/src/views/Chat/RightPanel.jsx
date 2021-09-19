@@ -4,11 +4,19 @@ import { ReactComponent as DownArrow } from "../../assets/icons/arrows/chevron-d
 import ChannelDetails from "../../components/RightPanel/ChannelDetails";
 import { useAuthentication } from "../../context/Authentication";
 import { ChatContext } from "../../context/ChatContext";
+import SignoutBox from "../../sub-components/SignoutBox";
 
 export default function RightPanel(props) {
 
+	const [modalOpen, setModalOpen] = useState(false);
+
 	const auth = useAuthentication();
 	const { chatContactsData } = useContext(ChatContext);
+
+	const handleClick = () => {
+		setModalOpen(!modalOpen);
+	};
+
 	const randomColors = ["#7AE582", "#48BFE3"];
 
 	useEffect(() => {
@@ -20,8 +28,8 @@ export default function RightPanel(props) {
 			<div className="right-panel-header-bar">
 				<Notification />
 
-				<div className="loggedIn-user-info-container">
-					<div className="loggedIn-user-info">
+				<div className="loggedIn-user-info-container" onClick={handleClick}>
+					<div className="loggedIn-user-info pointer">
 						{
 							props.userImage ? (
 								<img src={props.userImage} />
@@ -33,7 +41,13 @@ export default function RightPanel(props) {
 						}
 						<span className="userName">{`${auth.user.first_name} ${auth.user.last_name}`}</span>
 					</div>
-					<DownArrow />
+					<DownArrow className="pointer" />
+					{
+						modalOpen &&
+						<div>
+							<SignoutBox />
+						</div>
+					}
 				</div>
 			</div>
 
