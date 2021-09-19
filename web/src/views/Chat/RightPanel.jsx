@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { ReactComponent as Notification } from "../../assets/icons/notification/Notification Alert.svg";
 import { ReactComponent as DownArrow } from "../../assets/icons/arrows/chevron-down.svg";
 import ChannelDetails from "../../components/RightPanel/ChannelDetails";
-import { useAuthentication } from "../../context/Authentication";
+// import { useAuthentication } from "../../context/Authentication";
 import { ChatContext } from "../../context/ChatContext";
 import SignoutBox from "../../sub-components/SignoutBox";
 
@@ -10,7 +10,7 @@ export default function RightPanel(props) {
 
 	const [modalOpen, setModalOpen] = useState(false);
 
-	const auth = useAuthentication();
+	// const auth = useAuthentication();
 	const { chatContactsData } = useContext(ChatContext);
 
 	const handleClick = () => {
@@ -35,11 +35,12 @@ export default function RightPanel(props) {
 								<img src={props.userImage} />
 							) : (
 								<div className="userimage-alt" style={{ background: `${randomColors[Math.floor(Math.random() * 2)]}` }}>
-									<span>{`${auth.user.first_name[0]}${auth.user.last_name[0]}`}</span>
+									<span>JH</span>
+									{/* <span>{`${auth.user.first_name[0]}${auth.user.last_name[0]}`}</span> */}
 								</div>
 							)
 						}
-						<span className="userName">{`${auth.user.first_name} ${auth.user.last_name}`}</span>
+						<span className="userName">Jaffar Hussain</span>
 					</div>
 					<DownArrow className="pointer" />
 					{

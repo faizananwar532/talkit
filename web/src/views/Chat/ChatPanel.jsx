@@ -19,15 +19,17 @@ export default function ChatPanel() {
 			return;
 		}
 		const ws = new WebSocket(`${webSocketUrl}/ws/${params.channel_name}/${auth.access_token}`);
+
+		return ws;
+	}, [params.channel_name]);
+
+	if (ws) {
 		ws.onmessage = function (event) {
 			// var content = document.createTextNode(event.data);
 			console.log(event.data);
 			setChannelMessages([...channelMessages, JSON.parse(event.data)]);
 		};
-		return ws;
-	}, [params.channel_name]);
-
-	
+	}
 
 	function sendMessage(event) {
 		event.preventDefault();
@@ -64,14 +66,21 @@ export default function ChatPanel() {
 			<div>
 				{
 					channelMessages.map((data, index) => {
-						return (
-							<MessageBox sender key={index} message={data.message} />
-						);
+						// console.log(auth.user.username, data.username, "FLAG");
+						if (auth.user.username === data.username) {
+							return (
+								<div className="receiver-message-box">
+									<MessageBox receiver message={data.message} />
+								</div>
+							);
+						} else {
+							return (
+								<MessageBox sender key={index} message={data.message} />
+							);
+						}
 					})
 				}
-				<div className="receiver-message-box">
-					<MessageBox receiver />
-				</div>
+
 			</div>
 			<div>
 
