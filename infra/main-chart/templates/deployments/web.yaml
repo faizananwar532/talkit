@@ -27,9 +27,9 @@ spec:
           name: http-web
         env:
         - name: AUTH_BASE_URL
-          value: https://{{ .Values.hostnames.ambassador }}
+          value: https://{{ .Values.hostnames.api }}
         - name: CHAT_BASE_URL
-          value: https://{{ .Values.hostnames.ambassador }}
+          value: https://{{ .Values.hostnames.api }}
         livenessProbe:
           exec:
             command:
