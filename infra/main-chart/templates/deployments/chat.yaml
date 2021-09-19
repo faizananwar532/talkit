@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "relname" . }}-chat
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "relname" . }}
+    component: chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "relname" . }}
+      component: chat
+  template:
+    metadata:
+      labels:
+        app: {{ template "relname" . }}
+        component: chat
+    spec:
+      containers:
+      - name: {{ template "relname" . }}-chat
+        image: {{ .Values.images.chat }}:{{ .Values.tag }}
+        imagePullPolicy: {{ .Values.pullpolicy }}
+        command:
+        - sh
+        - -c
+        - "python3 asgi.py"
+        ports:
+        - containerPort: {{ .Values.ports.chat }}
+          name: http-chat
+        env:
+        - name: CHAT_PORT
+          value: "3060"
+        - name: REDIS_PORT
+          value: "10121"
+        - name: AUTH_PORT
+          value: "4000"
+        - name: REDIS_SERVER
+          value: {{ .Values.redis.server }}
+        livenessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 15
+          timeoutSeconds: 15
+        readinessProbe:
+          exec:
+            command:
+              - ls
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+        volumeMounts:
+        - name: secrets
+          mountPath: /tmp/secrets
+      nodeSelector:
+        cloud.google.com/gke-nodepool: nextgen-pool
+      volumes:
+      - name: secrets
+        secret:
+          secretName: {{ template "relname" . }}-shared-vol

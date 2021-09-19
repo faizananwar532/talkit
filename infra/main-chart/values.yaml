@@ -4,6 +4,7 @@ superuser_email:
 
 images:
   auth: gcr.io/talkit-prod/auth
+  chat: gcr.io/talkit-prod/chat
   web: gcr.io/talkit-prod/web
   
 tag:
@@ -36,6 +37,8 @@ mailgun:
   domain: mg.talkit.fun
 
 redis:
+  server: redis-10121.c15924.us-central1-mz.gcp.cloud.rlrcp.com
+  password: 
   channel: user_created
 
 autoscaling:
@@ -56,4 +59,6 @@ databases:
 
 ports:
   auth: 4000
+  chat: 3060
+  redis: 10121
   web: 80
