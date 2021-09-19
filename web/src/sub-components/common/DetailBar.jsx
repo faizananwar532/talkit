@@ -12,9 +12,9 @@ import ImageIcon from "./ImageIcon";
  */
 export default function DetailBar(props) {
 	return (
-		<div className={`detail-bar ${props.className}`} style={props.style}>
+		<div className={`detail-bar ${props.className}`} style={props.style} onClick={props.onClick}>
 			<div className="detail-bar-basic-content">
-				<ImageIcon type="sm" image={null} name={props.name} />
+				<ImageIcon type="sm" image={props.image || null} name={props.name} color={props.color} />
 				<span className="name-text">{props.name}</span>
 			</div>
 			{props.children}

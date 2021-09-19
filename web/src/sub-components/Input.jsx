@@ -6,7 +6,11 @@ export default function Input(props) {
 
 			<div className="plain-input-container" style={props.style}>
 				<div className="input-label">
-					<span>{props.label || "Label"}</span>
+					{
+						props.label &&
+						<span>{props.label || "Label"}</span>
+					}
+
 					{props.asterik && <span style={{ color: "red" }}> *</span>}
 				</div>
 				<div className="w-100">

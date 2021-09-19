@@ -15,7 +15,7 @@ export default function ChatRoomSelectionPanel(props) {
 	const { chatContactsData, setChatContactsData } = useContext(ChatContext);
 	const [searchValue, setSearchValue] = useState("");
 
-	const randomColors = ["#7AE582", "#48BFE3"];
+	// const randomColors = ["#7AE582", "#48BFE3"];
 	const channels = [
 		{
 			id: 1,

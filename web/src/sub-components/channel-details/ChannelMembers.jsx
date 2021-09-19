@@ -2,7 +2,7 @@ import React from "react";
 import { ReactComponent as UsersIcon } from "../../assets/icons/basic/users.svg";
 import ImageIcon from "../common/ImageIcon";
 
-export default function ChannelMembers() {
+export default function ChannelMembers(props) {
 
 
 	const members = ["zain", "zain", "zain", "zain", "zain", "zain"];
@@ -15,12 +15,12 @@ export default function ChannelMembers() {
 					{
 						members.map((member, index) => {
 							return (
-								<ImageIcon type="sm" key={index} image={null} style={{ marginLeft: `${index !== 0 ? "-10px" : "0px"}` }} />
+								<ImageIcon type="sm" key={index} image={null} style={{ marginLeft: `${index !== 0 ? "-12px" : "0px"}` }} />
 							);
 						})
 					}
 					<div className="profile-icon add-user-icon pointer">
-						<UsersIcon />
+						<UsersIcon onClick={props.onInviteUser} />
 					</div>
 				</div>
 			</div>

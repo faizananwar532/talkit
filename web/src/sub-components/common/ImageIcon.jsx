@@ -50,7 +50,7 @@ export default function ImageIcon(props) {
 				{
 					props.image
 						?
-						<img src={props.image} />
+						<img src={props.image} style={{ objectFit: "scale-down" }} />
 						:
 						<span className="span-text">{props.name ? getNameShortForm(props.name) : "MZ"}</span>
 				}
