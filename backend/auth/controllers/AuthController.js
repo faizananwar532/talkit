@@ -3,7 +3,7 @@ const exceptionHandler = require('../utilities/Exceptions');
 const { generateAccessToken, generateRefreshToken, validateToken, generateActivationToken } = require('../utilities/Authentication');
 const User = require('../models/User');
 const KeyMaster = require('../utilities/KeyMaster');
-const { publicOnRedisChannel } = require('../utilities/RedisStream');
+const { publishOnRedisChannel } = require('../utilities/RedisStream');
 
 /**
  * 
@@ -38,7 +38,7 @@ const register = async function ({ username, email, password }, origin) {
 
 		delete user['password'];
 
-		publicOnRedisChannel(process.env.USER_CREATED_CHANNEL, { data: user, activation_link: activationLink });
+		publishOnRedisChannel(process.env.USER_CREATED_CHANNEL, { data: user, activation_link: activationLink });
 
 		const { access_token, expiration_timestamp } = generateAccessToken(user);
 		const refreshToken = generateRefreshToken(user);
@@ -79,10 +79,6 @@ const login = async function ({ email, password }) {
 		if (!isPasswordValid) {
 			return { error: { status: KeyMaster.API_CODES.BAD_REQUEST, message: 'Invalid email or password' } };
 		}
-
-		// if (!user.is_active) {
-		// 	return { error: { status: 401, message: 'This account is inactive. Please check your email we have sent you an activation link' } };
-		// }
 
 		const { access_token, expiration_timestamp } = generateAccessToken(user);
 		const refreshToken = generateRefreshToken(user);
@@ -126,7 +122,7 @@ const refreshToken = async function ({ refresh_token }) {
 
 		const user = await User.query().findOne({ username: tokenData.user.username }).throwIfNotFound();
 
-		delete user["password"];
+		delete user['password'];
 
 		const { access_token, expiration_timestamp } = generateAccessToken(user);
 

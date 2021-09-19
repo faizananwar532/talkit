@@ -19,8 +19,9 @@ router.post('/signup', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
 
-	req.response = await authController.login(req.body);
-
+	const d = await authController.login(req.body);
+	console.log(d);
+	req.response = d;
 	next();
 
 });

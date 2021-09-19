@@ -1,0 +1,45 @@
+.channel-details-container .channel-members-details-container {
+    width         : 100%;
+    display       : flex;
+    flex-direction: column;
+    align-items   : flex-start;
+    padding       : 20px 0;
+    border-bottom : 1px solid $grey3;
+
+    .room-heading {
+        @extend .headline6;
+        color      : $grey7 !important;
+        font-weight: 500 !important;
+    }
+
+    .channel-members-icons-container {
+        margin-top: 25px;
+        width     : 100%;
+        display   : flex;
+
+        .channel-members-icons {
+            width   : 100%;
+            display : flex;
+            position: relative;
+
+            .add-user-icon {
+                margin-left     : -10px;
+                position        : absolute;
+                right           : -10px;
+                background-color: $grey0;
+
+                &:hover {
+
+                    background-color: $primaryColor;
+
+                    path {
+                        stroke: $grey0;
+                    }
+                }
+            }
+
+
+        }
+    }
+
+}

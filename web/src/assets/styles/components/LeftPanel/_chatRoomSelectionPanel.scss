@@ -1,7 +1,7 @@
 @import "../../style-assets/typography";
 
 .chat-main-panel-container .left-panel .chat-room-selection-panel-container {
-    width  : 325px;
+    width  : 100%;
     height : 100%;
     padding: 63px 0px 25px 0px;
 
@@ -47,7 +47,7 @@
     .all-rooms-container {
 
         height    : calc(100% - 135px);
-        width     : 100%;
+        width     : 98%;
         margin-top: 25px;
         overflow  : scroll;
         overflow-x: hidden;
@@ -61,9 +61,36 @@
             flex-direction: column;
             align-items   : flex-start;
 
-            .rooms-container-header-text {
-                @extend .body1;
-                color: $grey6;
+            .rooms-container-header {
+                width          : 100%;
+                padding        : 0 25px;
+                display        : flex;
+                justify-content: space-between;
+                align-items    : center;
+
+                .rooms-container-header-text {
+                    @extend .body1;
+                    color: $grey6;
+                }
+
+                .addIcon {
+                    width          : 25px;
+                    height         : 25px;
+                    border-radius  : 50%;
+                    display        : flex;
+                    justify-content: center;
+                    align-items    : center;
+
+                    &:hover {
+                        width           : 25px;
+                        height          : 25px;
+                        background-color: $grey2;
+                        border-radius   : 50%;
+                        display         : flex;
+                        justify-content : center;
+                        align-items     : center;
+                    }
+                }
             }
 
             .room-selector-bar {
@@ -73,6 +100,7 @@
                 justify-content: space-between;
                 align-items    : center;
                 margin-top     : 25px;
+                padding        : 0px 30px;
 
                 .bar-image-name-container {
                     width          : 290px;

@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const inviteController = require('./../controllers/InviteController');
+const { authenticateToken } = require('../utilities/Middleware');
 
-router.post('/', async (req, res, next) => {
 
-	req.response = { result: { status: 200, data: {} } };
+router.post('/', authenticateToken, async (req, res, next) => {
+
+	req.response = await inviteController.inviteUser(req.body, req.user);
 	next();
 
 });

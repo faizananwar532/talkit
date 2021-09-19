@@ -10,10 +10,20 @@ import { ReactComponent as SearchIcon } from "../assets/icons/search.svg";
  */
 
 export default function Search(props) {
-	return (
-		<div className="search">
-			<input placeholder={props.placeholder} onChange={props.onChange} />
-			<SearchIcon />
-		</div>
-	);
+	if (props.type === "plain") {
+		return (
+			<div className="plain-search ">
+				<input placeholder={props.placeholder} onChange={props.onChange} />
+				<SearchIcon />
+			</div>
+		);
+	}
+	else {
+		return (
+			<div className="search">
+				<input placeholder={props.placeholder} onChange={props.onChange} />
+				<SearchIcon />
+			</div>
+		);
+	}
 }
