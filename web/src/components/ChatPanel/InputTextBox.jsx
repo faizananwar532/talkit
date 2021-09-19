@@ -1,5 +1,5 @@
 import React from "react";
-import Attachment from "../../assets/icons/attachment.svg";
+import {ReactComponent as Attachment} from "../../assets/icons/attachment.svg";
 import Send from "../../assets/icons/send-2.svg";
 
 export default function InputTextBox(props) {
@@ -8,7 +8,6 @@ export default function InputTextBox(props) {
 			<div className="input-text-field">
 				<input
 					placeholder="Type your message"
-					className="input-text"
 					onChange={props.onChange}
 					onBlur={props.onBlur}
 					onFocus={props.onFocus}
@@ -22,10 +21,8 @@ export default function InputTextBox(props) {
 					readOnly={props.readOnly}
 					style={props.inputStyle}
 				/>
-				<img
-					src={Attachment}
-					alt=""
-				/>
+
+				<Attachment/>
 			</div>
 			<div className="send-image-container">
 				<img

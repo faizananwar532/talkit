@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
+import ChatSearch from "../../components/ChatPanel/ChatSearch";
 import InputTextBox from "../../components/ChatPanel/InputTextBox";
 import MessageBox from "../../components/ChatPanel/MessageBox";
 import { useAuthentication } from "../../context/Authentication";
@@ -83,7 +84,7 @@ export default function ChatPanel() {
 
 			</div>
 			<div>
-
+				<ChatSearch />
 			</div>
 		</div>
 	);

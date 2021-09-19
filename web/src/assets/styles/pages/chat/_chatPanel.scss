@@ -1,12 +1,13 @@
 .chat-box-container {
-	flex            : 1;
-	padding         : 25px 50px;
-	display         : flex;
-	flex-direction  : column-reverse;
-	background-color: $grey0;
-
+	flex: 1;
+	padding: 25px 50px;
+	display: flex;
+	flex-direction: column-reverse;
+	background-color: $grey0 !important;
+	position: relative;
+	justify-content: space-between;
 	.receiver-message-box {
-		display        : flex;
+		display: flex;
 		justify-content: flex-end;
 	}
 }

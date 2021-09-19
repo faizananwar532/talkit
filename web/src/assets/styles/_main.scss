@@ -24,7 +24,7 @@
 @import "./components/RightPanel/channelAttachments";
 @import "./components/ChatPanel/messagebox";
 @import "./components/ChatPanel/textInput";
-
+@import "./components/ChatPanel/chatSearch";
 //*****************Sub-Components
 @import "./sub-components/button";
 @import "./sub-components/input";
@@ -32,6 +32,8 @@
 @import "./sub-components/modal";
 @import "./sub-components/commons-sub-components";
 @import "./sub-components/signOut";
+@import "./sub-components/notificationBox";
+
 //*****************Pages
 @import "./pages/signIn.scss";
 @import "./pages/signUp.scss";
