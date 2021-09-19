@@ -34,7 +34,7 @@ export default function NotificationBox() {
 	};
     
 	return (
-		<div className="notification-box">
+		<div className="notification-box invisible-scrollbar">
 			<div className="notification-header">
 				<span>Notifications</span>
 				<span className="custom-mark">Mark all as read</span>
