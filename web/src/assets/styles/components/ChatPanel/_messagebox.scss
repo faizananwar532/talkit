@@ -2,7 +2,7 @@
 	display: flex;
 	align-items: center;
 	width: 50%;
-	justify-content: space-between;
+
 	padding-block: 10px;
 	img {
 		width: 35px;
@@ -30,7 +30,7 @@
 	display: flex;
 	align-items: center;
 	width: 50%;
-	justify-content: space-between;
+
 	padding-block: 10px;
 	img {
 		width: 35px;
@@ -41,7 +41,7 @@
 		width: 330px;
 		height: auto;
 		min-height: 40px;
-		background-color: $grey2;
+		background-color: $grey2 !important;
 		border-radius: 15px;
 		display: flex;
 		padding: 10px 10px 10px 20px;

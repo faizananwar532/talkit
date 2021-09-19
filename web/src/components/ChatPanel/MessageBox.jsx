@@ -13,7 +13,7 @@ export default function MessageBox(props) {
 						alt=""
 					/>
 				</div>
-				<div className="message-container">
+				<div className="message-container mr-3 ml-3">
 					<span>{props.message || "Lorem ipsum dolor sit amet consectetur."}</span>
 				</div>
 				<div onClick={props.onClick}>
@@ -28,7 +28,7 @@ export default function MessageBox(props) {
 				<div onClick={props.onClick}>
 					<MenuHorizontal/>
 				</div>
-				<div className="message-container">
+				<div className="message-container mr-3 ml-3">
 					<span>{props.message || "Lorem ipsum dolor sit amet consectetur.Lorem ipsum dolor sit amet consectetur.Lorem ipsum dolor sit amet consectetur."}</span>
 				</div>
 				<div>
