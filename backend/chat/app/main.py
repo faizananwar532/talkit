@@ -4,15 +4,33 @@ Author: Ammar Saqib
 import json
 import logging
 from typing import List
-from app.database import get_db
-from fastapi import FastAPI, Header, WebSocket, WebSocketDisconnect, Depends
-from routes import channel_routes, chat_routes
+
 from controllers.chat_controller import ChatController
+from fastapi import Depends, FastAPI, Header, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+from routes import channel_routes, chat_routes
+
+from app.database import get_db
 from app.utitilies import verification_details
 
 app = FastAPI()
 app.include_router(channel_routes.router)
 app.include_router(chat_routes.router)
+
+# origins = [
+#     "http://localhost.tiangolo.com",
+#     "https://localhost.tiangolo.com",
+#     "http://localhost",
+#     "http://localhost:8080",
+# ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins="*",
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class ConnectionManager:
