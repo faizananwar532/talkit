@@ -110,7 +110,8 @@ services:
       REDIS_PORT: $REDIS_PORT
       AUTH_PORT: 4000
       REDIS_SERVER: $REDIS_SERVER
-
+      REDIS_PASSWORD: $REDIS_PASSWORD 
+      
   notification:
     build: ./backend/notification
     container_name: notification
