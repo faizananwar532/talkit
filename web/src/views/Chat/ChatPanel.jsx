@@ -26,15 +26,20 @@ export default function ChatPanel() {
 
 	if (ws) {
 		ws.onmessage = function (event) {
-			// var content = document.createTextNode(event.data);
-			console.log(event.data);
-			setChannelMessages([...channelMessages, JSON.parse(event.data)]);
+			channelMessages.push(JSON.parse(event.data));
+			console.log(channelMessages);
+			setChannelMessages(channelMessages);
 		};
 	}
 
 	function sendMessage(event) {
+
 		event.preventDefault();
+		if (!message) {
+			return;
+		}
 		ws.send(JSON.stringify({ message: message }));
+		setMessage("");
 	}
 
 	const handleInput = (event) => {
@@ -59,12 +64,12 @@ export default function ChatPanel() {
 				{
 					params.channel_name && (
 						<form onSubmit={sendMessage}>
-							<InputTextBox onChange={handleInput} />
+							<InputTextBox onChange={handleInput} value={message} />
 						</form>
 					)
 				}
 			</div>
-			<div>
+			<div style={{ overflowY: "auto" }} className="invisible-scrollbar">
 				{
 					channelMessages.map((data, index) => {
 						// console.log(auth.user.username, data.username, "FLAG");

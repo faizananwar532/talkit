@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ChatRoomSelectionPanel from "../../components/LeftPanel/ChatRoomSelectionPanel";
 import JoinRoomModal from "../../components/LeftPanel/JoinRoomModal";
 import SideNavbar from "../../components/LeftPanel/SideNavbar";
-import Modal from "../../sub-components/common/Modal";
+// import Modal from "../../sub-components/common/Modal";
 
 export default function LeftPanel() {
 
@@ -23,7 +23,8 @@ export default function LeftPanel() {
 				isAddChannelModalOpen={addChannelModalsStatus.isAddChannelModalOpen}
 				isAddDmModalOpen={addChannelModalsStatus.isAddDmModalOpen}
 				onClose={() => { setAddChannelModalsStatus({ isAddChannelModalOpen: false, isAddDmModalOpen: false }); }}
-				onConfirm={(isConfirmed) => { }} />
+			// onConfirm={(isConfirmed) => { }} 
+			/>
 
 
 		</div >
