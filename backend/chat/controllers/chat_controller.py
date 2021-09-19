@@ -142,13 +142,14 @@ class ChatController:
         _data = list(_data)
         _data = [x.decode("utf-8") for x in _data]
 
-        logging.error(_data)
-        for channel in _data:
-            logging.error("inside for")
-            ret = self.__db.hgetall("{}{}".format(self.CHANNEL_HASH_PREFIX, channel))
-            logging.error(ret)
+        ret_data = []
 
-        return status.HTTP_200_OK, _data
+        for channel in _data:
+            ret = self.__db.hgetall("{}{}".format(self.CHANNEL_HASH_PREFIX, channel))
+            ret = {y.decode("utf-8"): ret.get(y).decode("utf-8") for y in ret.keys()}
+            ret_data.append(ret)
+
+        return status.HTTP_200_OK, ret_data
 
     def send_to_channel(self, channel_name, message):
         """
