@@ -55,8 +55,8 @@ spec:
         volumeMounts:
         - name: secrets
           mountPath: /tmp/secrets
-      nodeSelector:
-        cloud.google.com/gke-nodepool: nextgen-pool
+      # nodeSelector:
+      #   cloud.google.com/gke-nodepool: nextgen-pool
       volumes:
       - name: secrets
         secret:
