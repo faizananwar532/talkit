@@ -16,3 +16,7 @@ class ChannelName(BaseModel):
 
 class UserName(BaseModel):
     name: str
+
+
+class UserList(BaseModel):
+    users: str

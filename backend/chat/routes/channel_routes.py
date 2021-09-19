@@ -4,7 +4,7 @@ Author: Ammar Saqib
 import logging
 
 from app.database import get_db
-from app.schemas import ChannelDetails, ChannelName
+from app.schemas import ChannelDetails, ChannelName, UserList
 from app.utitilies import verification_details
 from controllers.chat_controller import ChatController
 from fastapi import APIRouter, Depends, Header, Response
@@ -96,3 +96,28 @@ def my_channels(_response=Response, _db=Depends(get_db), Authorization=Header(No
     _response.status_code = res_status
 
     return {"data": _data}
+
+
+@router.post("/add_users/{channel_name}", status_code=200)
+def add_users(
+    user_list: UserList,
+    channel_name: str,
+    _response=Response,
+    _db=Depends(get_db),
+    Authorization=Header(None),
+):
+    """
+    Adds the user in to the channels participants and channel in user's channels
+    """
+
+    stat, auth_data = verification_details(Authorization)
+
+    if stat != 200:
+        _response.status_code = 500
+        return {"data": "something happened"}
+
+    res_status, _data = ChatController(_db).add_users(channel_name, user_list)
+
+    _response.status_code = res_status
+
+    return {"data", _data}
