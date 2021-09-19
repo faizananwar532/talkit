@@ -69,19 +69,21 @@ export default function ChatPanel() {
 					)
 				}
 			</div>
-			<div style={{ overflowY: "auto" }} className="invisible-scrollbar">
+			<div style={{ overflowY: "auto" }} className="invisible-scrollbar pb-4">
 				{
 					channelMessages.map((data, index) => {
 						// console.log(auth.user.username, data.username, "FLAG");
 						if (auth.user.username === data.username) {
 							return (
-								<div className="receiver-message-box">
-									<MessageBox receiver message={data.message} />
+								<div className="receiver-message-box mt-2">
+									<MessageBox receiver message={data.message} username={data.username} />
 								</div>
 							);
 						} else {
 							return (
-								<MessageBox sender key={index} message={data.message} />
+								<div className="mt-2">
+									<MessageBox sender key={index} message={data.message} username={data.username} />
+								</div>
 							);
 						}
 					})
