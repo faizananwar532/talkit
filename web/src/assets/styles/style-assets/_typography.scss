@@ -5,69 +5,73 @@
 @import "../mixins/typegraphyMixin";
 
 .headline1 {
-    @include typography(Poppins, 300, 93px, 139.5px, -1.5px, null); //60 70
+	@include typography(Poppins, 300, 93px, 139.5px, -1.5px, null); //60 70
 }
 
 .headline2 {
-    @include typography(Poppins, 300, 58px, 87px, -0.5px, null); //70px
+	@include typography(Poppins, 300, 58px, 87px, -0.5px, null); //70px
 }
 
 .headline3 {
-    @include typography(Poppins, 400, 46px, 69px, -0.35px, null);
+	@include typography(Poppins, 400, 46px, 69px, -0.35px, null);
 }
 
 .headline4 {
-    @include typography(Poppins, 400, 33px, 49.5px, 0.25px, null);
+	@include typography(Poppins, 400, 33px, 49.5px, 0.25px, null);
 }
 
 .headline5 {
-    @include typography(Poppins, 400, 23px, 34.5px, 0.05px, null);
+	@include typography(Poppins, 400, 23px, 34.5px, 0.05px, null);
 }
 
 .headline6 {
-    @include typography(Poppins, 500, 19px, 28.5px, 0.15px, null);
+	@include typography(Poppins, 500, 19px, 28.5px, 0.15px, null);
+}
+
+.sub-heading {
+	@include typography(Poppins, 500, 16px, 24px, 1px, null);
 }
 
 .subtitle1 {
-    @include typography(Poppins, 400, 15px, 22.5px, 0.15px, null);
+	@include typography(Poppins, 400, 15px, 22.5px, 0.15px, null);
 }
 
 .subtitle2 {
-    @include typography(Poppins, 500, 13px, 19.5px, 0.1px, null);
+	@include typography(Poppins, 500, 13px, 19.5px, 0.1px, null);
 }
 
 .body1 {
-    @include typography(Poppins, 400, 15px, 22.5px, 0.5px, null);
+	@include typography(Poppins, 400, 15px, 22.5px, 0.5px, null);
 }
 
 .body2 {
-    @include typography(Poppins, 400, 13px, 19.5px, 0.25px, null);
+	@include typography(Poppins, 400, 13px, 19.5px, 0.25px, null);
 }
 
 .button-text {
-    @include typography(Poppins, 500, 13px, 19.5px, 1.25px, null);
+	@include typography(Poppins, 500, 13px, 19.5px, 1.25px, null);
 }
 
 .caption {
-    @include typography(Poppins, 400, 12px, 18px, 0.4px, null);
+	@include typography(Poppins, 400, 12px, 18px, 0.4px, null);
 }
 
 .overline {
-    @include typography(Poppins, 400, 10px, 15px, 1.5px, null);
+	@include typography(Poppins, 400, 10px, 15px, 1.5px, null);
 }
 
 // @mixin typography($fontFamily, $fontSize, $fontWeight, $letterSpacing, $lineHight, $color)
 
 .pointer {
-    &:hover {
-        cursor: pointer;
-    }
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 .primary-text {
-    color: $primaryColor;
+	color: $primaryColor;
 }
 
 .white-text {
-    color: $whiteColor;
+	color: $whiteColor;
 }

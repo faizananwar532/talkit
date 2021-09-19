@@ -1,46 +1,46 @@
 .channel-details-container {
-	width           : 100%;
-	height          : calc(100% - 130px);
+	width: 100%;
+	height: calc(100% - 130px);
 	background-color: $grey1;
-	border-radius   : 25px 25px 0px 0px;
-	padding         : 40px 0px 25px 0px;
-	display         : flex;
-	flex-direction  : column;
+	border-radius: 25px 25px 0px 0px;
+	padding: 40px 0px 25px 0px;
+	display: flex;
+	flex-direction: column;
 
 	.channel-chat-items-container {
-		width          : 100%;
-		display        : flex;
-		flex-direction : column;
-		overflow       : scroll;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		overflow: scroll;
 		scroll-behavior: smooth;
-		overflow-x     : hidden;
-		padding        : 0px 40px;
+		overflow-x: hidden;
+		padding: 0px 40px;
 	}
 
 	.channel-details {
-		display        : flex;
+		display: flex;
 		justify-content: space-between;
-		align-items    : center;
-		width          : 100%;
-		height         : 75px;
-		padding        : 0px 40px;
-		margin-bottom  : 20px;
+		align-items: center;
+		width: 100%;
+		height: 75px;
+		padding: 0px 40px;
+		margin-bottom: 20px;
 
 		.channel-name-icon-container {
-			display        : flex;
-			width          : 310px;
+			display: flex;
+			width: 310px;
 			justify-content: flex-start;
-			align-items    : center;
+			align-items: center;
 
 			.channel-icon {
-				display        : flex;
+				display: flex;
 				justify-content: center;
-				align-items    : center;
-				padding        : 10px;
-				width          : 75px;
-				height         : 75px;
-				background     : #48bfe3;
-				border-radius  : 66px;
+				align-items: center;
+				padding: 10px;
+				width: 75px;
+				height: 75px;
+				background: #48bfe3;
+				border-radius: 66px;
 
 				span {
 					@extend .headline4;
@@ -49,23 +49,21 @@
 			}
 
 			.channel-name {
-
-				display       : flex;
+				display: flex;
 				flex-direction: column;
-				align-items   : flex-start;
-				margin-left   : 20px;
+				align-items: flex-start;
+				margin-left: 20px;
 
 				span {
 					@extend .headline6;
+					color: $grey9 !important;
 				}
 
 				.span2 {
 					@extend .subtitle1;
-					color: $grey5;
+					color: $grey5 !important;
 				}
 			}
 		}
 	}
-
-
 }
