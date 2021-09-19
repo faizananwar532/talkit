@@ -19,12 +19,18 @@
 @import "./components/LeftPanel/sideNavbar";
 @import "./components/LeftPanel/chatRoomSelectionPanel";
 @import "./components/RightPanel/chanelDetails";
+@import "./components/RightPanel/channelMembers";
+@import "./components/RightPanel/channelMedia";
+@import "./components/RightPanel/channelAttachments";
 @import "./components/ChatPanel/messagebox";
 @import "./components/ChatPanel/textInput";
 
 //*****************Sub-Components
 @import "./sub-components/button";
 @import "./sub-components/input";
+@import "./sub-components/submenuBtn";
+@import "./sub-components/modal";
+@import "./sub-components/commons-sub-components";
 
 //*****************Pages
 @import "./pages/signIn.scss";

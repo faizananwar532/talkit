@@ -1,13 +1,14 @@
 .chat-main-panel-container {
 
     .right-panel {
-        width          : 450px;
-        height         : 100%;
-        display        : flex;
-        flex-direction : column;
-        justify-content: space-between;
-        padding-top    : 25px;
-        padding-right  : 25px;
+        width           : 450px;
+        height          : 100%;
+        display         : flex;
+        flex-direction  : column;
+        justify-content : space-between;
+        padding-top     : 25px;
+        padding-right   : 25px;
+        background-color: $grey0;
 
         .right-panel-header-bar {
             width          : 100%;
