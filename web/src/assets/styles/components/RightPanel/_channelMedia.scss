@@ -1,0 +1,49 @@
+.channel-details-container .channel-media-details-container {
+    width         : 100%;
+    height        : max-content;
+    max-height    : 265px;
+    padding       : 25px 0px 40px 0px;
+    border-bottom : 1px solid $grey3;
+    display       : flex;
+    flex-direction: column;
+    align-items   : flex-start;
+
+    .heading-text {
+        @extend .headline6;
+        color      : $grey7 !important;
+        font-weight: 500 !important;
+    }
+
+    .media-images-container {
+        width          : 100%;
+        display        : flex;
+        justify-content: space-between;
+        margin-top     : 25px;
+
+        .media-image {
+            width           : 100px;
+            height          : 100px;
+            border-radius   : 15px;
+            background-color: $iconColor1;
+
+        }
+    }
+
+    .view-all-option {
+        width          : 100%;
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+        margin-top     : 20px;
+
+        span {
+            @extend .subtitle1;
+            color: $primaryColor !important;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+    }
+}

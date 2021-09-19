@@ -1,0 +1,96 @@
+// Kindly press Ctrl+A and then press Ctrl+/ to use the code
+
+
+// Primary Secondary and other colors
+:root {
+    --primaryColor  : #d92b21;
+    --secondaryColor: red;
+    --textColor     : #3d3d3d;
+    --grey9         : #212529;
+    --grey8         : #343a40;
+    --grey7         : #495057;
+    --grey6         : #6c757d;
+    --grey5         : #adb5bd;
+    --grey4         : #ced4da;
+    --grey3         : #dee2e6;
+    --grey2         : #e9ecef;
+    --grey1         : #f8f9fa;
+    --grey0         : #ffffff;
+}
+
+$primaryColor   : var(--primaryColor);
+$secondaryColor : var(--secondaryColor);
+$textColor      : var(--textColor);
+
+// // Kindly press Ctrl+A and then press Ctrl+/ to use the code
+
+// // Primary Secondary and other colors
+
+$primaryLight: #ea5d5f;
+$textColor   : #000000;
+$whiteColor  : #ffffff;
+$iconColor1  : #48bfe3;
+$iconColor2  : #7ae582;
+
+// // Gradiant color
+$grey9: var(--grey9);
+$grey8: var(--grey8);
+$grey7: var(--grey7);
+$grey6: var(--grey6);
+$grey5: var(--grey5);
+$grey4: var(--grey4);
+$grey3: var(--grey3);
+$grey2: var(--grey2);
+$grey1: var(--grey1);
+$grey0: var(--grey0);
+
+
+.primaryColor {
+    color: $primaryColor;
+}
+
+.grey9 {
+    color: $grey9;
+}
+
+.grey8 {
+    color: $grey8;
+}
+
+.grey7 {
+    color: $grey7;
+}
+
+.grey6 {
+    color: $grey6;
+}
+
+.grey5 {
+    color: $grey5;
+}
+
+.grey4 {
+    color: $grey4;
+}
+
+.grey3 {
+    color: $grey3;
+}
+
+.grey2 {
+    color: $grey2;
+}
+
+.grey1 {
+    color: $grey1;
+}
+
+.grey0 {
+    color: $grey0;
+}
+
+// $gradiant: linear-gradient(158.81deg, #009ffd 0%, #2a2a72 100%);
+
+// // web background color
+
+$backgroundColor: #f7f7f7;

@@ -1,0 +1,41 @@
+.profile-icon {
+    width           : 60px;
+    height          : 60px;
+    border-radius   : 50%;
+    border          : 3px solid $grey0;
+    background-color: #48BFE3;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+
+    img {
+        width : 100%;
+        height: 100%;
+    }
+
+    .span-text {
+        @extend .headline6;
+        color      : $grey0 !important;
+        font-weight: 500 !important;
+    }
+}
+
+.detail-bar {
+    width          : 100%;
+    height         : 100%;
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+
+    .detail-bar-basic-content {
+        display        : flex;
+        justify-content: flex-start;
+        align-items    : center;
+
+        .name-text {
+            margin-left: 20px;
+            @extend .headline6;
+            color: $grey9 !important;
+        }
+    }
+}

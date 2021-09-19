@@ -1,0 +1,27 @@
+.chat-main-panel-container .left-panel .side-navbar {
+    width           : 110px;
+    height          : 100%;
+    background-color: $primaryColor;
+    border-radius   : 30px;
+    padding         : 57px 30px;
+    position        : relative;
+
+    .icons-panel-container {
+        padding: 60px 0px;
+
+        .selected-icon-container {
+            width          : 51px;
+            height         : 51px;
+            background     : $primaryLight;
+            border-radius  : 15px;
+            display        : flex;
+            justify-content: center;
+            align-items    : center;
+
+            path {
+                stroke: $grey0;
+            }
+        }
+
+    }
+}

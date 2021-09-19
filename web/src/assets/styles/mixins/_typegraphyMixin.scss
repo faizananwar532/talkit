@@ -1,0 +1,20 @@
+@mixin typography(
+	$fontFamily,
+	$fontWeight,
+	$fontSize,
+	$lineHight,
+	$letterSpacing,
+	$color
+) {
+	font-family: $fontFamily;
+	font-style: normal;
+	font-weight: $fontWeight;
+	font-size: $fontSize;
+	line-height: $lineHight;
+	letter-spacing: $letterSpacing;
+	@if $color == null {
+		color: #555555;
+	} @else {
+		color: $color;
+	}
+}

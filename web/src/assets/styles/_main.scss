@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,700,700i,900,900i");
+
+//********************Assets
+@import "./style-assets/colors";
+@import "./style-assets/typography";
+@import "./style-assets/page";
+@import "./style-assets/misc";
+
+//*********************Mixins
+@import "./mixins/typegraphyMixin";
+
+//******************Pages
+@import "./pages/chat/chatPanelContainer";
+@import "./pages/chat/leftPanel";
+@import "./pages/chat/chatPanel";
+@import "./pages/chat/rightPanel";
+
+//******************Components
+@import "./components/LeftPanel/sideNavbar";
+@import "./components/LeftPanel/chatRoomSelectionPanel";
+@import "./components/RightPanel/chanelDetails";
+@import "./components/RightPanel/channelMembers";
+@import "./components/RightPanel/channelMedia";
+@import "./components/RightPanel/channelAttachments";
+@import "./components/ChatPanel/messagebox";
+@import "./components/ChatPanel/textInput";
+@import "./components/ChatPanel/chatSearch";
+//*****************Sub-Components
+@import "./sub-components/button";
+@import "./sub-components/input";
+@import "./sub-components/submenuBtn";
+@import "./sub-components/modal";
+@import "./sub-components/commons-sub-components";
+@import "./sub-components/signOut";
+@import "./sub-components/notificationBox";
+
+//*****************Pages
+@import "./pages/signIn.scss";
+@import "./pages/signUp.scss";
+@import "./sub-components/search";
