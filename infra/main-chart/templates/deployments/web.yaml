@@ -26,7 +26,9 @@ spec:
         - containerPort: {{ .Values.ports.web }}
           name: http-web
         env:
-        - name: REACT_APP_GW_URL
+        - name: AUTH_BASE_URL
+          value: https://{{ .Values.hostnames.ambassador }}
+        - name: CHAT_BASE_URL
           value: https://{{ .Values.hostnames.ambassador }}
         livenessProbe:
           exec:
