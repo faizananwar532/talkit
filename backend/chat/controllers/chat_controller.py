@@ -25,6 +25,12 @@ class ChatController:
     def __init__(self, _db):
         self.__db = _db  # for storing the redis db object
 
+    def __decode_dictionary(self, ret):
+        """
+        The function byte decodes a dictionary and returns it
+        """
+        return {y.decode("utf-8"): ret.get(y).decode("utf-8") for y in ret.keys()}
+
     def create_channel(self, user_name, channel_details):
         """
         Creates a tenant in the system
@@ -201,10 +207,25 @@ class ChatController:
         for id in data:
             decoded_id = id[0].decode("utf-8")
             ret = self.__db.hgetall("{}{}".format(self.CHAT_MESSAGE_PREFIX, decoded_id))
-            ret = {y.decode("utf-8"): ret.get(y).decode("utf-8") for y in ret.keys()}
+            ret = self.__decode_dictionary(ret)
             ret_data.append(ret)
 
         return status.HTTP_200_OK, ret_data
+
+    def get_user_details(self, user_name):
+        """
+        Fetches the user profile of the user
+        """
+
+        try:
+            data = self.__db.hgetall("{}{}".format(self.USER_HASH_PREFIX, user_name))
+        except:
+            return status.HTTP_500_INTERNAL_SERVER_ERROR, "something went wrong"
+
+        data = self.__decode_dictionary(data)
+        # logging.error(data)
+
+        return status.HTTP_200_OK, data
 
     def add_user(self, _data):
         """
