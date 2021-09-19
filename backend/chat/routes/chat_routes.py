@@ -5,6 +5,7 @@ Author: Ammar Saqib
 import logging
 from typing import List
 from app.database import get_db
+from app.schemas import ChannelName
 from app.utitilies import verification_details
 from controllers.chat_controller import ChatController
 from fastapi import APIRouter, Depends, Header, Response, WebSocket, WebSocketDisconnect
@@ -58,8 +59,9 @@ async def get():
     return HTMLResponse(html)
 
 
-@router.get("/", status_code=200)
+@router.get("/{channel_name}", status_code=200)
 def get_all_convo(
+    channel_name: str,
     _response=Response,
     _db=Depends(get_db),
     Authorization=Header(None),
@@ -67,4 +69,14 @@ def get_all_convo(
     """
     Fetch all of the data from the channel stream
     """
-    pass
+    stat, _data = verification_details(Authorization)
+
+    if stat != 200:
+        _response.status_code = 500
+        return {"data": "something went wrong"}
+
+    res_staus, _data = ChatController(_db).get_all_convo(channel_name)
+
+    _response.status_code = res_staus
+
+    return {"data": _data}
