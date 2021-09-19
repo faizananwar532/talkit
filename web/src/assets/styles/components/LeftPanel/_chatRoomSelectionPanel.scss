@@ -68,7 +68,7 @@
 
 				.rooms-container-header-text {
 					@extend .body1;
-					color: $grey6;
+					color: $grey6 !important;
 				}
 
 				.addIcon {
