@@ -10,6 +10,10 @@
 	border          : none;
 	border-radius   : 10px;
 	font-family     : Poppins;
+
+	&:focus {
+		outline: none;
+	}
 }
 
 .button-primary:disabled {
@@ -62,5 +66,4 @@
 	to {
 		transform: rotate(360deg);
 	}
-
 }

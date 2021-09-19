@@ -3,10 +3,33 @@
     .left-panel {
         width           : 520px;
         height          : 100%;
-        padding         : 25px;
+        padding         : 25px 0px 25px 25px;
         display         : flex;
         background-color: $grey1;
         display         : flex;
         justify-content : space-between;
+
+        .create-channel {
+            padding: 30px 40px;
+        }
+
+        .join-channel {
+            padding       : 0px;
+            display       : flex;
+            flex-direction: column;
+
+            .search-bar {
+                padding      : 30px 40px;
+                border-bottom: 1px solid $grey2;
+            }
+
+            .channels-container {
+                padding   : 25px 20px 0px 20px;
+                margin    : 5px 20px 25px 20px;
+                max-height: 240px;
+                overflow  : scroll;
+                overflow-x: hidden;
+            }
+        }
     }
 }

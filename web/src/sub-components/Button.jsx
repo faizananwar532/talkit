@@ -6,7 +6,7 @@ export default function Button(props) {
 		return (
 			<button
 				disabled={props.processing}
-				className={props.className || "button-primary"}
+				className={`${props.className} button-primary`}
 				onClick={props.onClick}
 				style={props.style}
 				type={props.type}

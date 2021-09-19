@@ -4,21 +4,38 @@
   // }
 }
 
-.hide-scroll {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width   : none;
+// .hide-scroll {
+//   -ms-overflow-style: none;
+//   /* IE and Edge */
+//   scrollbar-width   : none;
+// }
+
+// .hide-scroll::-webkit-scrollbar {
+//   background: transparent;
+//   width     : 0;
+// }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C8CBCD white;
 }
 
-.hide-scroll::-webkit-scrollbar {
-  background: transparent;
-  width     : 0;
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
 }
 
-.error-text {
-	color: #d92b21 !important
+*::-webkit-scrollbar-track {
+  background   : white;
+  border-radius: 51px;
 }
 
-.success-text {
-	color: #71dd78 !important
+*::-webkit-scrollbar-thumb {
+  background-color: #C8CBCD;
+  border-radius   : 51px;
+  border          : 0px solid white;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
 }
