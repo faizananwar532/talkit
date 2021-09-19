@@ -24,7 +24,7 @@ spec:
         command:
         - sh
         - -c
-        - "yarn migrate && yarn seed"
+        - "yarn migrate"
         env:
         - name: POSTGRES_USERNAME
           value: {{ .Values.postgresql.postgresqlUsername }}
