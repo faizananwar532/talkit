@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 import React, { useState, useContext, useEffect } from "react";
-import Notification  from "../../assets/icons/notification/Notification Alert.svg";
+import Notification from "../../assets/icons/notification/Notification Alert.svg";
 import { ReactComponent as DownArrow } from "../../assets/icons/arrows/chevron-down.svg";
 import ChannelDetails from "../../components/RightPanel/ChannelDetails";
 import { useAuthentication } from "../../context/Authentication";
@@ -44,38 +44,38 @@ export default function RightPanel(props) {
 	return (
 		<div className="right-panel">
 			{
-				editModal && 
+				editModal &&
 				<Modal onClose={() => setEditModal(false)} title="Edit Profile" confirmBtnTitle="Save">
-					<div className="d-flex justify-content-between" style={{paddingInline: "30px"}}>
-						<div className="d-flex flex-column" style={{width:"60%"}}>
+					<div className="d-flex justify-content-between" style={{ paddingInline: "30px" }}>
+						<div className="d-flex flex-column" style={{ width: "60%" }}>
 							<div>
-								<Input label="Name" type="plain" name="name"/>
+								<Input label="Name" type="plain" name="name" />
 							</div>
 							<div className="mt-3">
-								<Input label="Email Address" type="plain" name="email"/>
+								<Input label="Email Address" type="plain" name="email" />
 							</div>
 						</div>
 						<div className="d-flex flex-column align-items-center">
-							<span className="headline6" style={{color:"#212529"}}>Profile Picture</span>
+							<span className="headline6" style={{ color: "#212529" }}>Profile Picture</span>
 							<img
 								src={image1}
 								alt=""
-								style={{width:"120px", height:"120px", borderRadius:"50%", paddingBottom:"5px"}}
+								style={{ width: "120px", height: "120px", borderRadius: "50%", paddingBottom: "5px" }}
 							/>
-							<Button className="mb-2" style={{color: "white"}} primary label="Upload Picture"/>
+							<Button className="mb-2" style={{ color: "white" }} primary label="Upload Picture" />
 						</div>
 					</div>
 				</Modal>
 			}
 			<div className="right-panel-header-bar">
-				<div onClick={handleNotificationClick} style={{position:"relative", cursor: "pointer"}}>
+				<div onClick={handleNotificationClick} style={{ position: "relative", cursor: "pointer" }}>
 					<img
 						src={Notification}
 						alt=""
 					/>
 					{
-						notificationBox && 
-						<NotificationBox/>
+						notificationBox &&
+						<NotificationBox />
 					}
 				</div>
 
@@ -88,15 +88,21 @@ export default function RightPanel(props) {
 							) : (
 								<div className="userimage-alt" style={{ background: `${randomColors[0]}` }}>
 									{/* <span>JH</span> */}
-									<span>{`${ auth.user.username}`}</span>
+									{
+										auth?.user?.username?.length > 0 ?
+											<span>{`${auth.user.username[0]}`}</span>
+											:
+											<span>{`U`}</span>
+									}
+
 								</div>
 							)
 						}
-						<span className="userName">{`${auth.user.username}`}</span>
+						<span className="userName">{`${auth.user.username || "User"}`}</span>
 					</div>
-					
-					<DownArrow className="pointer mb-1" style={{width:"20px", height:"20px"}}/>
-					
+
+					<DownArrow className="pointer mb-1" style={{ width: "20px", height: "20px" }} />
+
 					{
 						modalOpen &&
 						<div>

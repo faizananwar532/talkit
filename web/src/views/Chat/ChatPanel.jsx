@@ -60,34 +60,37 @@ export default function ChatPanel() {
 
 	return (
 		<div className="chat-box-container">
-			<div>
-				{
-					params.channel_name && (
-						<form onSubmit={sendMessage}>
-							<InputTextBox onChange={handleInput} value={message} />
-						</form>
-					)
-				}
-			</div>
-			<div style={{ overflowY: "auto" }} className="invisible-scrollbar pb-4">
-				{
-					channelMessages.map((data, index) => {
-						// console.log(auth.user.username, data.username, "FLAG");
-						if (auth.user.username === data.username) {
-							return (
-								<div className="receiver-message-box mt-2">
-									<MessageBox receiver message={data.message} username={data.username} />
-								</div>
-							);
-						} else {
-							return (
-								<div className="mt-2">
-									<MessageBox sender key={index} message={data.message} username={data.username} />
-								</div>
-							);
-						}
-					})
-				}
+			<div className="d-flex flex-column-reverse">
+				<div>
+					{
+						params.channel_name && (
+							<form onSubmit={sendMessage}>
+								<InputTextBox onChange={handleInput} value={message} />
+							</form>
+						)
+					}
+				</div>
+				<div style={{ overflowY: "auto" }} className="invisible-scrollbar pb-4">
+					{
+						channelMessages.map((data, index) => {
+							// console.log(auth.user.username, data.username, "FLAG");
+							if (auth.user.username === data.username) {
+								return (
+									<div className="receiver-message-box mt-2">
+										<MessageBox receiver message={data.message} username={data.username} />
+									</div>
+								);
+							} else {
+								return (
+									<div className="mt-2">
+										<MessageBox sender key={index} message={data.message} username={data.username} />
+									</div>
+								);
+							}
+						})
+					}
+
+				</div>
 
 			</div>
 			<div>
