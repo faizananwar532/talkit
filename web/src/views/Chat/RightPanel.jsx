@@ -86,9 +86,9 @@ export default function RightPanel(props) {
 							props.userImage ? (
 								<img src={props.userImage} />
 							) : (
-								<div className="userimage-alt" style={{ background: `${randomColors[Math.floor(Math.random() * 2)]}` }}>
+								<div className="userimage-alt" style={{ background: `${randomColors[0]}` }}>
 									{/* <span>JH</span> */}
-									<span>{`${auth.user.username[0]}`}</span>
+									<span>{`${ auth.user.username}`}</span>
 								</div>
 							)
 						}
